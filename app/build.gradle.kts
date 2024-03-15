@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.baoiaminnovations.baoiamapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.baoiaminnovations.baoiamapp"
