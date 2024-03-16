@@ -6,7 +6,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnBoardingScreen1
 import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnBoardingScreen2
-import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnBoardingScreen4
 import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnboardingScreen3
 
 fun NavGraphBuilder.onboardingGraph(navHostController: NavHostController) {
@@ -19,9 +18,6 @@ fun NavGraphBuilder.onboardingGraph(navHostController: NavHostController) {
         }
         composable(route = Screens.OnBoardingScreen3.route) {
             OnboardingScreen3(navHostController)
-        }
-        composable(route = Screens.OnBoardingScreen4.route) {
-            OnBoardingScreen4()
         }
     }
 }
