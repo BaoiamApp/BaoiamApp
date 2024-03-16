@@ -70,7 +70,7 @@ fun OnboardingScreen3(navHostController: NavHostController) {
             modifier = Modifier.offset(y = (-50).dp)
         )
         Button(
-            onClick = { },
+            onClick = { navHostController.navigate(Screens.SignInScreen.route) },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)

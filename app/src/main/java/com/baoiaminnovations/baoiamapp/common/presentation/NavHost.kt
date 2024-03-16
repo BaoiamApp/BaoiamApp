@@ -13,5 +13,6 @@ fun NavHost(
         startDestination = onBoardingGraph
     ) {
         onboardingGraph(navHostController)
+        authenticationGraph(navHostController)
     }
 }
