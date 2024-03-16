@@ -12,6 +12,6 @@ fun NavHost(
         navController = navHostController,
         startDestination = onBoardingGraph
     ) {
-        onboardingGraph()
+        onboardingGraph(navHostController)
     }
 }

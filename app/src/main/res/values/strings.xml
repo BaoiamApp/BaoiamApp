@@ -3,4 +3,8 @@
     <string name="welcomeText">Welcome</string>
     <string name="welcomeText2">We are glad that you \n are here</string>
     <string name="next">Next</string>
+    <string name="startLearning">\u0020Start learning \n anywhere, and  \n build your </string>
+    <string name="brightCareer">\u0020bright career</string>
+    <string name="baoiamIntro">BAOIAM is an E-learning platform that facilitates holistic skill development through a variety of courses, empowering learners to pursue their passions.</string>
+    <string name="startLearningButton">Start Learning</string>
 </resources>

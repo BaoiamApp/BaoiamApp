@@ -33,11 +33,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun OnBoardingScreen1() {
+fun OnBoardingScreen1(navHostController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +65,8 @@ fun OnBoardingScreen1() {
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(top = 5.dp, start = 10.dp).zIndex(10f),
+                    .padding(top = 5.dp, start = 10.dp)
+                    .zIndex(10f),
                 color = Color.Gray
             )
             Image(
@@ -77,7 +80,7 @@ fun OnBoardingScreen1() {
             )
         }
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { navHostController.navigate(Screens.OnBoardingScreen2.route) },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)
