@@ -7,4 +7,8 @@
     <string name="brightCareer">\u0020bright career</string>
     <string name="baoiamIntro">BAOIAM is an E-learning platform that facilitates holistic skill development through a variety of courses, empowering learners to pursue their passions.</string>
     <string name="startLearningButton">Start Learning</string>
+    <string name="signIn">Sign In</string>
+    <string name="emailPhonenumber">Email / Phone Number</string>
+    <string name="password">Password</string>
+    <string name="login">Log In</string>
 </resources>
