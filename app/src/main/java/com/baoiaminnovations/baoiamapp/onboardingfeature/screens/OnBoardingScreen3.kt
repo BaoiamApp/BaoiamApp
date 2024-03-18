@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -37,12 +39,13 @@ fun OnboardingScreen3(navHostController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.onPrimary)
+            .verticalScroll(rememberScrollState())
     ) {
         Box(
             modifier = Modifier
                 .requiredWidth(LocalConfiguration.current.screenWidthDp.dp)
                 .height(600.dp)
-                .offset(y = (-30).dp),
+                .offset(y = (-50).dp),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
@@ -67,14 +70,13 @@ fun OnboardingScreen3(navHostController: NavHostController) {
             text = stringResource(id = R.string.baoiamIntro),
             textAlign = TextAlign.Center,
             color = Color.Gray,
-            modifier = Modifier.offset(y = (-50).dp)
+            modifier = Modifier.offset(y = (-70).dp)
         )
         Button(
             onClick = { navHostController.navigate(Screens.SignInScreen.route) },
             modifier = Modifier
                 .width(350.dp)
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 30.dp),
+                .align(Alignment.CenterHorizontally),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(10.dp)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent
