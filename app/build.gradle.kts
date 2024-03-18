@@ -68,8 +68,11 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //NAVIGATION
-    implementation("androidx.navigation:navigation-compose:2.4.2")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     //MATERIAL 3
     implementation("androidx.compose.material3:material3:1.2.1")
+
+    //ICONS
+    implementation("androidx.compose.material:material-icons-extended:1.0.0")
 }

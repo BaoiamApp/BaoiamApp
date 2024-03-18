@@ -12,10 +12,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -34,6 +41,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -50,10 +59,17 @@ fun SignInScreen(navHostController: NavHostController) {
     var password by remember {
         mutableStateOf("")
     }
+
+    var visibility by remember {
+        mutableStateOf(true)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.onPrimary),
+            .background(color = MaterialTheme.colorScheme.onPrimary)
+            .verticalScroll(
+                rememberScrollState()
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -97,7 +113,16 @@ fun SignInScreen(navHostController: NavHostController) {
             label = { Text(text = stringResource(id = R.string.password)) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = 30.dp),
+            trailingIcon = {
+                IconButton(onClick = { visibility = !visibility }) {
+                    Icon(
+                        imageVector = if (visibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = "visibility"
+                    )
+                }
+            },
+            visualTransformation = if (visibility) PasswordVisualTransformation() else VisualTransformation.None
         )
         Button(
             onClick = { },
