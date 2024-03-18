@@ -1,5 +1,10 @@
 package com.baoiaminnovations.baoiamapp.onboardingfeature.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,6 +26,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -42,26 +48,39 @@ import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun OnBoardingScreen1(navHostController: NavHostController) {
+    var show = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.onPrimary)
             .verticalScroll(rememberScrollState())
     ) {
-        Text(
-            text = stringResource(id = R.string.welcomeText),
-            fontSize = 35.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 20.dp, start = 10.dp),
-            style = TextStyle(
-                brush = Brush.horizontalGradient(
-                    listOf(
-                        Color(0xFFFF7B00),
-                        Color(0xFFFF0400)
+        AnimatedVisibility(visibleState = show, enter = slideInHorizontally(
+            animationSpec = tween(
+                durationMillis = 800,
+                easing = LinearOutSlowInEasing
+            )
+        ) { it }) {
+            Text(
+                text = stringResource(id = R.string.welcomeText),
+                fontSize = 35.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 20.dp, start = 10.dp),
+                style = TextStyle(
+                    brush = Brush.horizontalGradient(
+                        listOf(
+                            Color(0xFFFF7B00),
+                            Color(0xFFFF0400)
+                        )
                     )
                 )
             )
-        )
+        }
+
         Box {
             Text(
                 text = stringResource(id = R.string.welcomeText2),
