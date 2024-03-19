@@ -53,19 +53,21 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignInScreen(navHostController: NavHostController) {
-    var username by remember {
+    var username = remember {
         mutableStateOf("")
     }
-    var password by remember {
+    var password = remember {
         mutableStateOf("")
     }
 
-    var visibility by remember {
+    var visibility = remember {
         mutableStateOf(true)
     }
     Column(
@@ -94,41 +96,8 @@ fun SignInScreen(navHostController: NavHostController) {
             ),
             modifier = Modifier.offset(y = (-40).dp)
         )
-        OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                focusedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
-            ),
-            label = { Text(text = stringResource(id = R.string.emailPhonenumber)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp, end = 30.dp, bottom = 10.dp)
-        )
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                focusedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
-            ),
-            label = { Text(text = stringResource(id = R.string.password)) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 30.dp),
-            trailingIcon = {
-                IconButton(onClick = { visibility = !visibility }) {
-                    Icon(
-                        imageVector = if (visibility) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                        contentDescription = "visibility"
-                    )
-                }
-            },
-            visualTransformation = if (visibility) PasswordVisualTransformation() else VisualTransformation.None
-        )
+        BasicTextField(text = username, id = R.string.emailPhonenumber)
+        PasswordTextField(password = password, visibility = visibility, id = R.string.password)
         TextButton(
             onClick = { /*TODO*/ },
             modifier = Modifier
