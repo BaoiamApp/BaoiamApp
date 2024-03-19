@@ -11,4 +11,8 @@
     <string name="emailPhonenumber">Email / Phone Number</string>
     <string name="password">Password</string>
     <string name="login">Log In</string>
+    <string name="forgetPassword">Forget Password ?</string>
+    <string name="orLoginWith">--------------------   or login with   --------------------</string>
+    <string name="dontHaveAnAccount">Don\'t have an account ? </string>
+    <string name="register">\u0020Register</string>
 </resources>

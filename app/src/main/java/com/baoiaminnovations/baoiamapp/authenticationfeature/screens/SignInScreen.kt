@@ -26,6 +26,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,15 +35,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -124,12 +129,20 @@ fun SignInScreen(navHostController: NavHostController) {
             },
             visualTransformation = if (visibility) PasswordVisualTransformation() else VisualTransformation.None
         )
+        TextButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(end = 20.dp)
+        ) {
+            Text(text = stringResource(id = R.string.forgetPassword))
+        }
         Button(
             onClick = { },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 50.dp),
+                .padding(top = 30.dp),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(10.dp)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent
@@ -154,6 +167,30 @@ fun SignInScreen(navHostController: NavHostController) {
             }
 
         }
+        Text(
+            text = stringResource(id = R.string.orLoginWith),
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .alpha(0.7f),
+            color = Color.Gray
+        )
+        Text(text = buildAnnotatedString {
+            append(stringResource(id = R.string.dontHaveAnAccount))
+            withStyle(
+                style = SpanStyle(
+                    brush = Brush.horizontalGradient(
+                        listOf(
+                            Color(0xFFFF7B00),
+                            Color(0xFFFF0400)
+                        )
+                    )
+                )
+            ) {
+                TextButton(onClick = { /*TODO*/ }) {
+                    append(stringResource(id = R.string.register))
+                }
+            }
+        }
+        )
     }
-
 }
