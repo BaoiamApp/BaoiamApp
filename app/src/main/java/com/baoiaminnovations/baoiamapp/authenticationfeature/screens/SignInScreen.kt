@@ -144,11 +144,32 @@ fun SignInScreen(navHostController: NavHostController) {
             modifier = Modifier
                 .padding(top = 20.dp)
                 .alpha(0.7f),
-            color = Color.Gray
+            color = Color.Gray,
+            fontSize = 12.sp
         )
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
+        ) {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.google),
+                    contentDescription = "Google",
+                    tint = Color.Unspecified
+                )
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.facebook),
+                    contentDescription = "Facebook",
+                    tint = Color.Unspecified
+                )
+            }
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy((-7).dp)
         ) {
             Text(
                 text = stringResource(id = R.string.dontHaveAnAccount),
