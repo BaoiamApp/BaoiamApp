@@ -81,7 +81,8 @@ fun OnBoardingScreen1(navHostController: NavHostController) {
             )
         }
 
-        Box {
+        Box(modifier = Modifier
+            .fillMaxWidth()) {
             Text(
                 text = stringResource(id = R.string.welcomeText2),
                 fontSize = 20.sp,
@@ -95,9 +96,10 @@ fun OnBoardingScreen1(navHostController: NavHostController) {
                 painter = painterResource(id = R.drawable.onboarding1),
                 contentDescription = "Onboarding",
                 modifier = Modifier
-                    .width(400.dp)
-                    .height(550.dp)
-                    .padding(10.dp),
+                    .width(350.dp)
+                    .height(500.dp)
+                    .padding(10.dp)
+                    .align(Alignment.TopCenter),
                 contentScale = ContentScale.Fit
             )
         }
@@ -106,7 +108,7 @@ fun OnBoardingScreen1(navHostController: NavHostController) {
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 50.dp),
+                .padding(top = 110.dp),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(10.dp)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent

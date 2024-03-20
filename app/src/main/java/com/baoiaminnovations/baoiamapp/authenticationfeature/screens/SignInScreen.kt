@@ -102,7 +102,7 @@ fun SignInScreen(navHostController: NavHostController) {
         BasicTextField(text = username, id = R.string.emailPhonenumber)
         PasswordTextField(password = password, visibility = visibility, id = R.string.password)
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navHostController.navigate(Screens.ForgotPassword.route) },
             modifier = Modifier
                 .align(Alignment.End)
                 .padding(end = 20.dp)
