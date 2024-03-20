@@ -20,4 +20,7 @@
     <string name="createAnAccount">Create an account</string>
     <string name="signup">Sign Up</string>
     <string name="alreadyHaveAnAccount">Already have an account ?</string>
+    <string name="enterYourRegisteredEmailOrPhoneNo">Enter your registered email or phone number to send an OTP to reset your password</string>
+    <string name="forgotPassword">Forgot Password ?</string>
+    <string name="sendCode">Send Code</string>
 </resources>

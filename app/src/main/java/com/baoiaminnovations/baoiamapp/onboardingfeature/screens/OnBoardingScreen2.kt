@@ -104,9 +104,10 @@ fun OnBoardingScreen2(navHostController: NavHostController) {
             painter = painterResource(id = R.drawable.onboarding2),
             contentDescription = "Onboarding",
             modifier = Modifier
-                .width(400.dp)
+                .width(350.dp)
                 .height(550.dp)
-                .padding(10.dp),
+                .padding(10.dp)
+                .align(Alignment.CenterHorizontally),
             contentScale = ContentScale.Fit
         )
         Button(
