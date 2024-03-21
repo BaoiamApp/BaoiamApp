@@ -2,16 +2,22 @@ package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -36,42 +42,73 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.components.OtpTextFields
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable
-fun ForgotPassword(navHostController: NavHostController) {
-    var emailOrNumber = remember {
+fun OtpVerification(navHostController: NavHostController) {
+    var otp1 = remember {
         mutableStateOf("")
     }
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+    var otp2 = remember {
+        mutableStateOf("")
+    }
+    var otp3 = remember {
+        mutableStateOf("")
+    }
+    var otp4 = remember {
+        mutableStateOf("")
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.onPrimary)
+            .verticalScroll(rememberScrollState()),
+    ) {
         Image(
-            painter = painterResource(id = R.drawable.forgotpassword),
+            painter = painterResource(id = R.drawable.enterotp),
             contentDescription = "Forgot Password",
             modifier = Modifier
                 .width(300.dp)
                 .height(450.dp)
-                .padding(10.dp),
+                .padding(10.dp)
+                .align(Alignment.CenterHorizontally),
             contentScale = ContentScale.Fit
         )
         Text(
-            text = stringResource(id = R.string.forgotPassword),
+            text = stringResource(id = R.string.otpVerfication),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
                 lineHeight = 0.em
             ),
-            modifier = Modifier.offset(y = (-20).dp)
+            modifier = Modifier
+                .offset(y = (-20).dp)
+                .align(Alignment.CenterHorizontally)
         )
         Text(
-            text = stringResource(id = R.string.enterYourRegisteredEmailOrPhoneNo),
+            text = stringResource(id = R.string.enterOtp),
             fontSize = 15.sp,
             textAlign = TextAlign.Center,
             color = Color.Gray,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+            modifier = Modifier
+                .padding(start = 10.dp, end = 10.dp)
+                .align(Alignment.CenterHorizontally)
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        BasicTextField(text = emailOrNumber, id = R.string.emailPhonenumber)
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 20.dp, end = 20.dp)
+        ) {
+            OtpTextFields(number = otp1, labelTextId = R.string.default_otp)
+            Spacer(modifier = Modifier.width(20.dp))
+            OtpTextFields(number = otp2, labelTextId = R.string.default_otp)
+            Spacer(modifier = Modifier.width(20.dp))
+            OtpTextFields(number = otp3, labelTextId = R.string.default_otp)
+            Spacer(modifier = Modifier.width(20.dp))
+            OtpTextFields(number = otp4, labelTextId = R.string.default_otp)
+        }
         Button(
             onClick = { navHostController.navigate(Screens.OtpVerificationScreen.route) },
             modifier = Modifier
@@ -98,9 +135,21 @@ fun ForgotPassword(navHostController: NavHostController) {
                     .height(45.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(id = R.string.sendCode))
+                Text(text = stringResource(id = R.string.verify))
             }
 
         }
+        Spacer(modifier = Modifier.heightIn(20.dp))
+        Text(
+            text = stringResource(id = R.string.resend), style = TextStyle(
+                brush = Brush.horizontalGradient(
+                    listOf(
+                        Color(0xFFFF7B00),
+                        Color(0xFFFF0400)
+                    )
+                )
+            ),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
     }
 }
