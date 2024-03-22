@@ -28,4 +28,6 @@
     <string name="default_otp">-</string>
     <string name="verify">Verify</string>
     <string name="resend">Resend</string>
+    <string name="createNewPassword">Create New Password</string>
+    <string name="resetPassword">Reset Password</string>
 </resources>
