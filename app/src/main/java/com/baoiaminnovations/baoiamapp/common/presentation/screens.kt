@@ -11,5 +11,6 @@ sealed class Screens(val route: String) {
     object SignInScreen : Screens("sign_in_screen")
     object SignUpScreen : Screens("sign_up_screen")
     object ForgotPassword : Screens("forgot_password_screen")
-    object OtpVerificationScreen : Screens("otp_verfication_screen")
+    object OtpVerificationScreen : Screens("otp_verification_screen")
+    object CreateNewPasswordScreen : Screens("create_new_password_screen")
 }
