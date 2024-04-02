@@ -104,7 +104,7 @@ fun SignUpScreen(navHostController: NavHostController) {
             id = R.string.confirmPassword
         )
         Button(
-            onClick = { },
+            onClick = { navHostController.navigate(Screens.AccountCreatedScreen.route) },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)

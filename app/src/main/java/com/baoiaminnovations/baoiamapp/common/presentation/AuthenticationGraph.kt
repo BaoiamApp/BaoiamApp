@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.baoiaminnovations.baoiamapp.authenticationfeature.screens.AccountCreated
 import com.baoiaminnovations.baoiamapp.authenticationfeature.screens.CreateNewPassword
 import com.baoiaminnovations.baoiamapp.authenticationfeature.screens.ForgotPassword
 import com.baoiaminnovations.baoiamapp.authenticationfeature.screens.OtpVerification
@@ -33,6 +34,9 @@ fun NavGraphBuilder.authenticationGraph(navHostController: NavHostController) {
         }
         composable(Screens.PasswordUpdatedScreen.route) {
             PasswordUpdated(navHostController)
+        }
+        composable(Screens.AccountCreatedScreen.route) {
+            AccountCreated(navHostController = navHostController)
         }
     }
 }

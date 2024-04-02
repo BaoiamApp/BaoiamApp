@@ -14,4 +14,5 @@ sealed class Screens(val route: String) {
     object OtpVerificationScreen : Screens("otp_verification_screen")
     object CreateNewPasswordScreen : Screens("create_new_password_screen")
     object PasswordUpdatedScreen : Screens("password_updated_screen")
+    object AccountCreatedScreen:Screens("account_created_screen")
 }
