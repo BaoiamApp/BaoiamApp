@@ -30,4 +30,8 @@
     <string name="resend">Resend</string>
     <string name="createNewPassword">Create New Password</string>
     <string name="resetPassword">Reset Password</string>
+    <string name="passwordHasBeenUpdated">You\'re Password has been updated</string>
+    <string name="updatedSuccessfully">Updated successfully</string>
+    <string name="accountCreatedSuccessfully">Account created successfully</string>
+    <string name="loginUsingUsernameAndPassword">Login using username and password</string>
 </resources>
