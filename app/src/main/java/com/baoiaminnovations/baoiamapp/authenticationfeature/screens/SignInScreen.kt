@@ -110,7 +110,7 @@ fun SignInScreen(navHostController: NavHostController) {
             Text(text = stringResource(id = R.string.forgetPassword))
         }
         Button(
-            onClick = { },
+            onClick = { navHostController.navigate(Screens.ExploreScreen.route) },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)

@@ -3,6 +3,7 @@ package com.baoiaminnovations.baoiamapp.common.presentation
 
 const val onBoardingGraph = "onboarding_graph"
 const val authenticationGraph = "authentication_graph"
+const val mainScreenGraph = "main_graph"
 
 sealed class Screens(val route: String) {
     object OnBoardingScreen1 : Screens("onbroading_screen_1")
@@ -14,5 +15,11 @@ sealed class Screens(val route: String) {
     object OtpVerificationScreen : Screens("otp_verification_screen")
     object CreateNewPasswordScreen : Screens("create_new_password_screen")
     object PasswordUpdatedScreen : Screens("password_updated_screen")
-    object AccountCreatedScreen:Screens("account_created_screen")
+    object AccountCreatedScreen : Screens("account_created_screen")
+    object MainScreen : Screens("main_screen")
+    object ExploreScreen : Screens("explore_screen")
+    object MyCourseScreen : Screens("my_course_screen")
+    object CareerScreen : Screens("career_screen")
+    object ProfileScreen : Screens("profile_screen")
+    object SettingsScreen : Screens("settings_screen")
 }

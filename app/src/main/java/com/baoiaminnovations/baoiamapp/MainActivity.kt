@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.baoiaminnovations.baoiamapp.common.presentation.MainScreen
+
 import com.baoiaminnovations.baoiamapp.common.presentation.NavHost
 import com.baoiaminnovations.baoiamapp.ui.theme.BaoiamAppTheme
 
@@ -22,7 +24,7 @@ class MainActivity : ComponentActivity() {
             BaoiamAppTheme {
                 // A surface container using the 'background' color from the theme
                 Column {
-                    NavHost(navHostController = rememberNavController())
+                    MainScreen(navHostController = rememberNavController())
                 }
             }
         }
