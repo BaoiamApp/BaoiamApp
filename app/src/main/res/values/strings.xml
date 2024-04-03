@@ -34,4 +34,8 @@
     <string name="updatedSuccessfully">Updated successfully</string>
     <string name="accountCreatedSuccessfully">Account created successfully</string>
     <string name="loginUsingUsernameAndPassword">Login using username and password</string>
+    <string name="explore">Explore</string>
+    <string name="myCourse">My Course</string>
+    <string name="career">Career</string>
+    <string name="profile">Profile</string>
 </resources>
