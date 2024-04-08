@@ -75,4 +75,7 @@ dependencies {
 
     // EXTENDED ICONS
     implementation("androidx.compose.material:material-icons-extended:1.6.4")
+
+    // CONSTRAINT LAYOUT
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }
