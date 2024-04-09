@@ -135,6 +135,7 @@ fun EditProfile() {
                 , modifier = Modifier.padding(start = 30.dp)
                 , fontSize = 17.sp, color = Color.Black)
 
+
             BasicTextField(text = emailadd, id = R.string.emailAddress)
         }
 

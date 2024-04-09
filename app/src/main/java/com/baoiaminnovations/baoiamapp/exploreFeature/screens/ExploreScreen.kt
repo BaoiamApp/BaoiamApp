@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.exploreFeature
+package com.baoiaminnovations.baoiamapp.exploreFeature.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
