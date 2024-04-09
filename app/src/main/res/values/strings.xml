@@ -38,6 +38,14 @@
     <string name="myCourse">My Course</string>
     <string name="career">Career</string>
     <string name="profile">Profile</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="certificate">Certificate</string>
+    <string name="refer_and_earn">Refer and earn</string>
+    <string name="settingt">Setting</string>
+    <string name="enter_your_full_name">Enter your full name</string>
+    <string name="Phonenumber">Enter your phone number</string>
+    <string name="emailaddress">Enter your email</string>
+    <string name="btn_save">save</string>
     <string name="profilePic">Profile Picture of the user</string>
     <string name="welcome">Welcome User</string>
     <string name="whatDoYouWantToLearn">What do you want to learn ?</string>
