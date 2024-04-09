@@ -4,6 +4,7 @@ import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 
@@ -64,18 +65,18 @@ import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
 @Composable
 fun ProfileScreen(navHostController: NavHostController) {
 
+
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.onPrimary)
             .fillMaxSize()
     ) {
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 10.dp)
-                .background(color = MaterialTheme.colorScheme.onPrimary),
-
-            ) {
+                .padding(start = 15.dp)
+        ) {
             Row(
                 modifier = Modifier.align(Alignment.CenterStart),
                 verticalAlignment = Alignment.CenterVertically,
@@ -92,7 +93,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             shape = CircleShape
                         )
-                        .padding(25.dp)
+                        .padding(15.dp)
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Column() {
@@ -103,6 +104,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                         fontSize = 18.sp,
                         color = Color.Black
                     )
+
                     Text(
                         text = "user email address",
                         fontWeight = FontWeight.Normal,
@@ -112,13 +114,10 @@ fun ProfileScreen(navHostController: NavHostController) {
                     )
                 }
             }
-
             IconButton(
                 onClick = { navHostController.navigate(Screens.EditProfile.route) },
                 modifier = Modifier
-                    .align(
-                        CenterEnd
-                    )
+                    .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
                 Icon(imageVector = Icons.Outlined.AddAPhoto, contentDescription = "")
@@ -127,154 +126,170 @@ fun ProfileScreen(navHostController: NavHostController) {
         }
         Spacer(modifier = Modifier.height(50.dp))
 
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp), verticalAlignment = CenterVertically
+                .padding(start = 15.dp).clickable {
+
+                }
         ) {
-            IconButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .padding(start = 20.dp)
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterStart),
+                verticalAlignment = CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Bookmark,
                     contentDescription = "",
-                    modifier = Modifier.fillMaxSize()
-
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(
+                        id = R.string.wishlist
+                    ),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 15.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bookmark,
+                    contentDescription = "",
                 )
             }
 
-            Text(
-                text = stringResource(
-                    id = R.string.wishlist
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 30.dp)
-            )
-
-            Icon(
-                imageVector = Icons.Outlined.Bookmark, contentDescription = "", modifier = Modifier
-                    .padding(start = 200.dp)
-                    .size(20.dp)
-
-            )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp), verticalAlignment = CenterVertically
+                .padding(start = 15.dp).clickable {
+
+                }
         ) {
-            IconButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .padding(start = 20.dp)
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterStart),
+                verticalAlignment = CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Bookmark,
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize()
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(
+                        id = R.string.certificate
+                    ),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 15.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bookmark,
+                    contentDescription = "",
                 )
             }
 
-            Text(
-                text = stringResource(
-                    id = R.string.certificate
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 30.dp)
-            )
-
-            Icon(
-                imageVector = Icons.Outlined.Bookmark, contentDescription = "", modifier = Modifier
-                    .padding(start = 180.dp)
-                    .size(20.dp)
-
-            )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp), verticalAlignment = CenterVertically
+                .padding(start = 15.dp).clickable {
+
+                }
         ) {
-            IconButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .padding(start = 20.dp)
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterStart),
+                verticalAlignment = CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Bookmark,
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize()
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(
+                        id = R.string.referAndEarn
+                    ),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 15.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bookmark,
+                    contentDescription = "",
                 )
             }
 
-            Text(
-                text = stringResource(
-                    id = R.string.referAndEarn
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 30.dp)
-            )
-
-            Icon(
-                imageVector = Icons.Outlined.Bookmark, contentDescription = "", modifier = Modifier
-                    .padding(start = 148.dp)
-                    .size(20.dp)
-
-            )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp), verticalAlignment = CenterVertically
+                .padding(start = 15.dp).clickable {
+
+                }
         ) {
-            IconButton(
-                onClick = { /*TODO*/ }, modifier = Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .padding(start = 20.dp)
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterStart),
+                verticalAlignment = CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Bookmark,
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize()
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(
+                    text = stringResource(
+                        id = R.string.settings
+                    ),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 15.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Bookmark,
+                    contentDescription = "",
                 )
             }
 
-            Text(
-                text = stringResource(
-                    id = R.string.settings
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 30.dp)
-            )
-
-            Icon(
-                imageVector = Icons.Outlined.Bookmark, contentDescription = "", modifier = Modifier
-                    .padding(start = 208.dp)
-                    .size(20.dp)
-
-            )
         }
 
         Spacer(modifier = Modifier.height(30.dp))
