@@ -45,6 +45,8 @@
     <string name="enterYourFullName">Enter your full name</string>
     <string name="enterYourPhoneNumber">Enter your phone number</string>
     <string name="emailAddress">Enter your email</string>
+    <string name="enterYourPhoneNo">Enter your phone number</string>
+    <string name="enterYourEmail">Enter your email</string>
     <string name="save">save</string>
     <string name="profilePic">Profile Picture of the user</string>
     <string name="welcome">Welcome User</string>
