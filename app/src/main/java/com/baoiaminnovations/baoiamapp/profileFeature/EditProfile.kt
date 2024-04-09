@@ -121,7 +121,7 @@ fun EditProfile() {
                     , fontSize = 17.sp, color = Color.Black)
 
             BasicTextField(text = username
-                ,id = R.string.enter_your_full_name)
+                ,id = R.string.enterYourFullName)
         }
 
         Column(modifier = Modifier
@@ -135,7 +135,7 @@ fun EditProfile() {
                 , modifier = Modifier.padding(start = 30.dp)
                 , fontSize = 17.sp, color = Color.Black)
 
-            BasicTextField(text = emailadd, id = R.string.emailaddress)
+            BasicTextField(text = emailadd, id = R.string.enterYourEmail)
         }
 
         Column(modifier = Modifier
@@ -190,7 +190,7 @@ fun EditProfile() {
 
             }){
 
-          Button1Preview(text = stringResource(id = R.string.btn_save)
+          Button1Preview(text = stringResource(id = R.string.save)
 
               , onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
               ,modifier =Modifier
