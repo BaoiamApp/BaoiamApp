@@ -14,7 +14,7 @@ import com.baoiaminnovations.baoiamapp.settingsfeature.SettingsScreen
 fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
     navigation(startDestination = Screens.ExploreScreen.route, route = mainScreenGraph) {
         composable(Screens.ExploreScreen.route) {
-            ExploreScreen()
+            ExploreScreen(navHostController)
         }
         composable(Screens.MyCourseScreen.route) {
             MyCourse()
