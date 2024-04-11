@@ -18,12 +18,14 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     onPrimary = white,
-    onPrimaryContainer = softWhite
+    onPrimaryContainer = softWhite,
+    onSecondaryContainer = softOrange
 )
 
 private val LightColorScheme = lightColorScheme(
     onPrimary = white,
-    onPrimaryContainer = softWhite
+    onPrimaryContainer = softWhite,
+    onSecondaryContainer = softOrange
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -46,10 +48,10 @@ fun BaoiamAppTheme(
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) DarkColorScheme else LightColorScheme
+            if (darkTheme) LightColorScheme else LightColorScheme
         }
 
-        darkTheme -> DarkColorScheme
+        darkTheme -> LightColorScheme
         else -> LightColorScheme
     }
     val view = LocalView.current
