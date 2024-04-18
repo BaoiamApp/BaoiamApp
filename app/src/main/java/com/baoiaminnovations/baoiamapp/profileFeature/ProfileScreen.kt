@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 
 
+
 import androidx.compose.foundation.layout.Row
+
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,13 +32,19 @@ import androidx.compose.material.icons.outlined.AddAPhoto
 import androidx.compose.material.icons.outlined.ArrowOutward
 import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.Logout
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterEnd
@@ -51,6 +59,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,6 +71,7 @@ import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(navHostController: NavHostController) {
 
@@ -82,17 +92,10 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(
-                    imageVector = Icons.Default.Person, contentDescription = stringResource(
-                        id = R.string.profilePic
-                    ),
+                Image(painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "",
                     modifier = Modifier
                         .clip(CircleShape)
-                        .border(
-                            1.dp,
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            shape = CircleShape
-                        )
                         .padding(15.dp)
                 )
                 Spacer(modifier = Modifier.width(5.dp))
@@ -120,16 +123,17 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Icon(imageVector = Icons.Outlined.AddAPhoto, contentDescription = "")
+                Image(painter = painterResource(id = R.drawable.edit_profile), contentDescription = "")
             }
 
         }
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp).clickable {
+                .padding(start = 15.dp)
+                .clickable {
 
                 }
         ) {
@@ -139,10 +143,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.wishlist), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -158,10 +159,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.chevron_right), contentDescription = "")
             }
 
         }
@@ -171,7 +169,8 @@ fun ProfileScreen(navHostController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp).clickable {
+                .padding(start = 15.dp)
+                .clickable {
 
                 }
         ) {
@@ -181,10 +180,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.certificate), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -200,10 +196,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.chevron_right), contentDescription = "")
             }
 
         }
@@ -213,7 +206,8 @@ fun ProfileScreen(navHostController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp).clickable {
+                .padding(start = 15.dp)
+                .clickable {
 
                 }
         ) {
@@ -223,10 +217,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.refer_and_earn), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -242,10 +233,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.chevron_right), contentDescription = "")
             }
 
         }
@@ -255,7 +243,8 @@ fun ProfileScreen(navHostController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 15.dp).clickable {
+                .padding(start = 15.dp)
+                .clickable {
 
                 }
         ) {
@@ -265,10 +254,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.settings), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -284,10 +270,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.Bookmark,
-                    contentDescription = "",
-                )
+                Image(painter = painterResource(id = R.drawable.chevron_right), contentDescription = "")
             }
 
         }
@@ -295,14 +278,20 @@ fun ProfileScreen(navHostController: NavHostController) {
         Spacer(modifier = Modifier.height(30.dp))
 
         TextButton(
-            onClick = { /*TODO*/ }, colors = ButtonDefaults.textButtonColors(
-                contentColor = LinearGradient,
+            onClick = { 
+
+            }, colors = ButtonDefaults.textButtonColors(
             ), modifier = Modifier.align(CenterHorizontally)
         ) {
-            Text(text = "Logout")
-            Icon(imageVector = Icons.Outlined.Logout, contentDescription = "")
+            Text(text = "Logout", style = TextStyle(brush = Brush.horizontalGradient(colors = listOf(
+                LinearGradient, LinearGradient2
+            )))
+            )
+            Image(painter = painterResource(id = R.drawable.logout),
+                contentDescription = "",
+                modifier = Modifier.padding(start = 10.dp)
+            )
         }
-
 
     }
 

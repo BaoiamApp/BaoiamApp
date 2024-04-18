@@ -22,5 +22,7 @@ sealed class Screens(val route: String) {
     object CareerScreen : Screens("career_screen")
     object ProfileScreen : Screens("profile_screen")
     object EditProfile : Screens("edit_profile")
+    object PopupWindow : Screens("popup_window")
+    object CapturedImage : Screens("captured_image")
     object SettingsScreen : Screens("settings_screen")
 }
