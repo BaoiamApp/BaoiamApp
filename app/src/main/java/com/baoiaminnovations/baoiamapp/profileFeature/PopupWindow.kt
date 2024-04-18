@@ -1,0 +1,178 @@
+package com.baoiaminnovations.baoiamapp.profileFeature
+
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
+import com.baoiaminnovations.baoiamapp.R
+
+
+@Composable
+fun PopUpWindow(navHostController: NavHostController) {
+
+    var context = LocalContext.current
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    val camlauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview()){
+        bitmap = it
+    }
+
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val photolauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()){uri : Uri? ->
+        imageUri = uri
+    }
+    imageUri?.let {
+        if (Build.VERSION.SDK_INT < 28){
+            bitmap = MediaStore.Images
+                .Media.getBitmap(context.contentResolver, it)
+        }else{
+            val source = ImageDecoder.createSource(context.contentResolver, it)
+            bitmap = ImageDecoder.decodeBitmap(source)
+        }
+        bitmap?.let{btm ->
+            Image(bitmap= btm.asImageBitmap(), contentDescription = null )
+        }
+
+    }
+
+
+
+
+
+    ConstraintLayout(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)
+        .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+    ) {
+        val (text , camera , photos , delete , txtcamera , txtphoto) = createRefs()
+
+
+
+        // Code Snippet For Text "profile photo"
+
+        Text(text = "Profile Photo",
+            modifier = Modifier
+                .constrainAs(text){
+                    top.linkTo(parent.top, margin = 20.dp)
+                    start.linkTo(parent.start, margin = 20.dp)
+                }, fontSize = 18.sp, color = Color.Black
+        )
+
+        // Code Snippet For Image "Camera"
+
+        Box(modifier = Modifier
+            .size(80.dp)
+            .clip(shape = RoundedCornerShape(10.dp))
+            .clickable {
+                camlauncher.launch()
+            }    // Navigate to camera
+            .constrainAs(camera) {
+                top.linkTo(text.bottom, margin = 20.dp)
+                start.linkTo(parent.start, margin = 20.dp)
+            }) {
+            Image(painter = painterResource(id = R.drawable.camera_app),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Center)
+            )
+        }
+
+        // Code Snippet For Image "Photos"
+
+        Box(modifier = Modifier
+            .size(80.dp)
+            .clip(shape = RoundedCornerShape(10.dp))
+            .clickable { photolauncher.launch("image/*")
+                }     // Navigate to photos
+            .constrainAs(photos) {
+                top.linkTo(camera.top)
+                bottom.linkTo(camera.bottom)
+                start.linkTo(camera.end, margin = 30.dp)
+            }) {
+            Image(painter = painterResource(id = R.drawable.photos),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Center)
+            )
+        }
+
+        // Code Snippet For Image "Delete"
+
+        Image(painter = painterResource(id = R.drawable.baseline_delete),
+            contentDescription = "",
+            modifier = Modifier
+                .size(30.dp)
+                .clickable { }     // Navigate to
+                .constrainAs(delete) {
+                    top.linkTo(parent.top, margin = 20.dp)
+                    end.linkTo(parent.end, margin = 10.dp)
+                }
+        )
+
+        // Code Snippet For Text "Camera"
+
+        Box(modifier = Modifier
+            .width(80.dp)
+            .height(20.dp)
+            .constrainAs(txtcamera) {
+                top.linkTo(camera.bottom, margin = 16.dp)
+                start.linkTo(parent.start, margin = 20.dp)
+            }){
+            Text(text = "Camera"
+                , fontSize = 18.sp
+                , color = Color.Black
+                , modifier = Modifier.align(Center))
+        }
+
+        // Code Snippet For Text "albums"
+
+        Box(modifier = Modifier
+            .width(80.dp)
+            .height(20.dp)
+            .constrainAs(txtphoto) {
+                top.linkTo(txtcamera.top)
+                bottom.linkTo(txtcamera.bottom)
+                start.linkTo(txtcamera.end, margin = 30.dp)
+            }){
+            Text(text = "Albums"
+                , fontSize = 18.sp
+                , color = Color.Black
+                , modifier = Modifier.align(Center))
+        }
+
+    }
+}
+
+
