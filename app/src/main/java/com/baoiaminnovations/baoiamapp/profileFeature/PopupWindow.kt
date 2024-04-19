@@ -1,10 +1,13 @@
 package com.baoiaminnovations.baoiamapp.profileFeature
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -19,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,56 +37,84 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Objects
 
 
 @Composable
-fun PopUpWindow(navHostController: NavHostController) {
+fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>) {
 
     var context = LocalContext.current
+
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(
+        Objects.requireNonNull(context),
+        context.applicationContext.packageName + ".provider", file
+    )
+
+  //  var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
+
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val camlauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicturePreview()){
-        bitmap = it
-    }
-
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val photolauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()){uri : Uri? ->
-        imageUri = uri
-    }
-    imageUri?.let {
-        if (Build.VERSION.SDK_INT < 28){
-            bitmap = MediaStore.Images
-                .Media.getBitmap(context.contentResolver, it)
-        }else{
-            val source = ImageDecoder.createSource(context.contentResolver, it)
-            bitmap = ImageDecoder.decodeBitmap(source)
-        }
-        bitmap?.let{btm ->
-            Image(bitmap= btm.asImageBitmap(), contentDescription = null )
-        }
-
-    }
-
-
-
-
-
-    ConstraintLayout(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White)
-        .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+        contract = ActivityResultContracts.TakePicture()
     ) {
-        val (text , camera , photos , delete , txtcamera , txtphoto) = createRefs()
+        imageUri.value = uri
+    }
 
+
+    val photolauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageUri.value = uri!!
+        }
+    /*  imageUri?.let {
+          if (Build.VERSION.SDK_INT < 28) {
+              bitmap = MediaStore.Images
+                  .Media.getBitmap(context.contentResolver, it)
+          } else {
+              val source = ImageDecoder.createSource(context.contentResolver, it)
+              bitmap = ImageDecoder.decodeBitmap(source)
+          }
+          bitmap?.let { btm ->
+              Image(bitmap = btm.asImageBitmap(), contentDescription = null)
+          }
+
+      }*/
+
+    val permission = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = {
+            if (it) {
+                camlauncher.launch(uri)
+            } else {
+                Toast.makeText(context, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
+    ) {
+        val (text, camera, photos, delete, txtcamera, txtphoto) = createRefs()
 
 
         // Code Snippet For Text "profile photo"
 
-        Text(text = "Profile Photo",
+        Text(
+            text = "Profile Photo",
             modifier = Modifier
-                .constrainAs(text){
+                .constrainAs(text) {
                     top.linkTo(parent.top, margin = 20.dp)
                     start.linkTo(parent.start, margin = 20.dp)
                 }, fontSize = 18.sp, color = Color.Black
@@ -94,17 +126,29 @@ fun PopUpWindow(navHostController: NavHostController) {
             .size(80.dp)
             .clip(shape = RoundedCornerShape(10.dp))
             .clickable {
-                camlauncher.launch()
+
             }    // Navigate to camera
             .constrainAs(camera) {
                 top.linkTo(text.bottom, margin = 20.dp)
                 start.linkTo(parent.start, margin = 20.dp)
             }) {
-            Image(painter = painterResource(id = R.drawable.camera_app),
+            Image(
+                painter = painterResource(id = R.drawable.camera_app),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Center)
+                    .clickable {
+                        if (ContextCompat.checkSelfPermission(
+                                context,
+                                android.Manifest.permission.CAMERA
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            camlauncher.launch(uri)
+                        } else {
+                            permission.launch(android.Manifest.permission.CAMERA)
+                        }
+                    }
             )
         }
 
@@ -113,14 +157,16 @@ fun PopUpWindow(navHostController: NavHostController) {
         Box(modifier = Modifier
             .size(80.dp)
             .clip(shape = RoundedCornerShape(10.dp))
-            .clickable { photolauncher.launch("image/*")
-                }     // Navigate to photos
+            .clickable {
+                photolauncher.launch("image/*")
+            }     // Navigate to photos
             .constrainAs(photos) {
                 top.linkTo(camera.top)
                 bottom.linkTo(camera.bottom)
                 start.linkTo(camera.end, margin = 30.dp)
             }) {
-            Image(painter = painterResource(id = R.drawable.photos),
+            Image(
+                painter = painterResource(id = R.drawable.photos),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxSize()
@@ -130,7 +176,7 @@ fun PopUpWindow(navHostController: NavHostController) {
 
         // Code Snippet For Image "Delete"
 
-        Image(painter = painterResource(id = R.drawable.baseline_delete),
+        AsyncImage(model = imageUri.value,
             contentDescription = "",
             modifier = Modifier
                 .size(30.dp)
@@ -149,11 +195,13 @@ fun PopUpWindow(navHostController: NavHostController) {
             .constrainAs(txtcamera) {
                 top.linkTo(camera.bottom, margin = 16.dp)
                 start.linkTo(parent.start, margin = 20.dp)
-            }){
-            Text(text = "Camera"
-                , fontSize = 18.sp
-                , color = Color.Black
-                , modifier = Modifier.align(Center))
+            }) {
+            Text(
+                text = "Camera",
+                fontSize = 18.sp,
+                color = Color.Black,
+                modifier = Modifier.align(Center)
+            )
         }
 
         // Code Snippet For Text "albums"
@@ -165,14 +213,27 @@ fun PopUpWindow(navHostController: NavHostController) {
                 top.linkTo(txtcamera.top)
                 bottom.linkTo(txtcamera.bottom)
                 start.linkTo(txtcamera.end, margin = 30.dp)
-            }){
-            Text(text = "Albums"
-                , fontSize = 18.sp
-                , color = Color.Black
-                , modifier = Modifier.align(Center))
+            }) {
+            Text(
+                text = "Albums",
+                fontSize = 18.sp,
+                color = Color.Black,
+                modifier = Modifier.align(Center)
+            )
         }
 
     }
 }
 
+fun Context.createImageFile(): File {
+    // Create an image file name
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+    val imageFileName = "JPEG_" + timeStamp + "_"
+    val image = File.createTempFile(
+        imageFileName, /* prefix */
+        ".jpg", /* suffix */
+        externalCacheDir      /* directory */
+    )
+    return image
+}
 

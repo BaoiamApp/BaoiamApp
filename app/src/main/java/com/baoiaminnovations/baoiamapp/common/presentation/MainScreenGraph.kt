@@ -11,7 +11,6 @@ import androidx.navigation.navigation
 import com.baoiaminnovations.baoiamapp.careerFeature.CareerScreen
 import com.baoiaminnovations.baoiamapp.exploreFeature.screens.ExploreScreen
 import com.baoiaminnovations.baoiamapp.myCourseFeature.MyCourse
-import com.baoiaminnovations.baoiamapp.profileFeature.CapturedImage
 
 import com.baoiaminnovations.baoiamapp.profileFeature.EditProfile
 import com.baoiaminnovations.baoiamapp.profileFeature.PopUpWindow
@@ -35,12 +34,12 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
         composable(Screens.EditProfile.route) {
             EditProfile(navHostController)}
 
-        composable(Screens.PopupWindow.route) {
+        /*composable(Screens.PopupWindow.route) {
             PopUpWindow(navHostController)
-        }
-        composable(Screens.CapturedImage.route) {
-            CapturedImage {}
-        }
+        }*/
+        /*composable(Screens.CapturedImage.route) {
+            CapturedImage()
+        }*/
         composable(Screens.SettingsScreen.route) {
             SettingsScreen()
         }

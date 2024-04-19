@@ -2,13 +2,13 @@ package com.baoiaminnovations.baoiamapp.profileFeature
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-
 
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,6 +55,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Visibility
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
@@ -62,7 +63,6 @@ import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,13 +75,13 @@ fun EditProfile(navHostController: NavHostController) {
     //var context = LocalContext.current
 
 
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White)
+    ) {
 
-
-    ConstraintLayout(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Color.White)) {
-
-        val (image , fullname , phone , email , password2 , button , popup) = createRefs()
+        val (image, fullname, phone, email, password2, button, popup) = createRefs()
 
         var username = remember {
             mutableStateOf("")
@@ -99,6 +99,7 @@ fun EditProfile(navHostController: NavHostController) {
             mutableStateOf(true)
         }
 
+        var imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
 
         Box(modifier = Modifier.constrainAs(image) {
@@ -106,31 +107,38 @@ fun EditProfile(navHostController: NavHostController) {
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         }) {
-            Image(painter = painterResource(id = R.drawable.profile)
-                , contentDescription = ""
-                , modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .background(Color.White)
-                    )
+            if (imageUri.value == Uri.EMPTY) {
+                Image(
+                    painter = painterResource(id = R.drawable.group_615),
+                    contentDescription = "Empty profile picture"
+                )
+            } else {
+                AsyncImage(
+                    model = imageUri.value,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .background(Color.White)
+                )
+            }
 
             Image(painter = painterResource(
-                id = R.drawable.group_616)
-                ,contentDescription = ""
-            , modifier = Modifier
-                    .padding(top = 70.dp, start = 70.dp)
-                    .size(25.dp)
-                    .clip(CircleShape)
-                    .clickable {
-                        isPopupVisible = true
-                    }   // Navigate to camera and album popup
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(
-                                LinearGradient, LinearGradient2
-                            )
+                id = R.drawable.group_616
+            ), contentDescription = "", modifier = Modifier
+                .padding(top = 70.dp, start = 70.dp)
+                .size(25.dp)
+                .clip(CircleShape)
+                .clickable {
+                    isPopupVisible = true
+                }   // Navigate to camera and album popup
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            LinearGradient, LinearGradient2
                         )
-                    ))
+                    )
+                ))
 
         }
         // Code Snippet For Text field fullname
@@ -142,13 +150,17 @@ fun EditProfile(navHostController: NavHostController) {
                 top.linkTo(image.bottom, margin = 20.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }){
-            Text(text = "Full name"
-                , modifier = Modifier.padding(start = 30.dp)
-                    , fontSize = 17.sp, color = Color.Black)
+            }) {
+            Text(
+                text = "Full name",
+                modifier = Modifier.padding(start = 30.dp),
+                fontSize = 17.sp,
+                color = Color.Black
+            )
 
-            BasicTextField(text = username
-                ,id = R.string.enterYourFullName)
+            BasicTextField(
+                text = username, id = R.string.enterYourFullName
+            )
         }
 
         // Code Snippet For Text field email
@@ -159,10 +171,13 @@ fun EditProfile(navHostController: NavHostController) {
                 top.linkTo(phone.bottom, margin = 20.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }){
-            Text(text = "Email"
-                , modifier = Modifier.padding(start = 30.dp)
-                , fontSize = 17.sp, color = Color.Black)
+            }) {
+            Text(
+                text = "Email",
+                modifier = Modifier.padding(start = 30.dp),
+                fontSize = 17.sp,
+                color = Color.Black
+            )
 
 
             BasicTextField(text = emailadd, id = R.string.emailAddress)
@@ -176,16 +191,19 @@ fun EditProfile(navHostController: NavHostController) {
                 top.linkTo(fullname.bottom, margin = 20.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }){
-            Text(text = "Phone"
-                , modifier = Modifier.padding(start = 30.dp)
-                , fontSize = 17.sp, color = Color.Black)
+            }) {
+            Text(
+                text = "Phone",
+                modifier = Modifier.padding(start = 30.dp),
+                fontSize = 17.sp,
+                color = Color.Black
+            )
 
             // needs to implement dropdown
 
             OutlinedTextField(
                 value = phoneNo.value,
-                onValueChange = {phoneNo.value = it},
+                onValueChange = { phoneNo.value = it },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     focusedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -198,11 +216,18 @@ fun EditProfile(navHostController: NavHostController) {
                             .padding(start = 40.dp)
                             .clickable { })
 
-                    Image(painter = painterResource(id = R.drawable.india_logo)
-                        , contentDescription = "")
+                    Image(
+                        painter = painterResource(id = R.drawable.india_logo),
+                        contentDescription = ""
+                    )
 
                 },
-                label = {Text(text = stringResource(R.string.enterYourPhoneNo), color = Color.Gray)},
+                label = {
+                    Text(
+                        text = stringResource(R.string.enterYourPhoneNo),
+                        color = Color.Gray
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp, end = 30.dp, bottom = 10.dp)
@@ -218,10 +243,13 @@ fun EditProfile(navHostController: NavHostController) {
                 top.linkTo(email.bottom, margin = 20.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }){
-            Text(text = "Password"
-                , modifier = Modifier.padding(start = 30.dp)
-                , fontSize = 17.sp, color = Color.Black)
+            }) {
+            Text(
+                text = "Password",
+                modifier = Modifier.padding(start = 30.dp),
+                fontSize = 17.sp,
+                color = Color.Black
+            )
 
             PasswordTextField(
                 password = password,
@@ -240,15 +268,15 @@ fun EditProfile(navHostController: NavHostController) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
 
-            }){
+            }) {
 
-          Button1Preview(text = stringResource(id = R.string.save)
-
-              , onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
-              ,modifier = Modifier
-                  .align(CenterHorizontally)
-                  .fillMaxSize()
-                  )
+            Button1Preview(text = stringResource(id = R.string.save),
+                onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
+                ,
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .fillMaxSize()
+            )
 
         }
 
@@ -262,12 +290,10 @@ fun EditProfile(navHostController: NavHostController) {
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            }){
-            if(isPopupVisible){
+            }) {
+            if (isPopupVisible) {
                 ModalBottomSheet(onDismissRequest = { isPopupVisible = false }) {
-                    PopUpWindow(navHostController)
-
-
+                    PopUpWindow(navHostController, imageUri)
                 }
 
             }
