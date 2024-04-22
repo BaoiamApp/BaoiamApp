@@ -17,23 +17,23 @@ sealed class ScreensBottomNavigation(
         ScreensBottomNavigation(
             "explore_screen",
             R.string.explore,
-            R.drawable.ic_launcher_foreground
+            R.drawable.explore
         )
 
     object myCourse :
         ScreensBottomNavigation(
             "my_course_screen",
             R.string.myCourse,
-            R.drawable.ic_launcher_foreground
+            R.drawable.courses
         )
 
     object career :
-        ScreensBottomNavigation("career_screen", R.string.career, R.drawable.ic_launcher_foreground)
+        ScreensBottomNavigation("career_screen", R.string.career, R.drawable.career)
 
     object profile : ScreensBottomNavigation(
         "profile_screen",
         R.string.profile,
-        R.drawable.ic_launcher_foreground
+        R.drawable.profile
     )
 
 }

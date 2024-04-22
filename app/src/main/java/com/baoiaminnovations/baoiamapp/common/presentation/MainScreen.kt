@@ -73,7 +73,7 @@ fun MainScreen(navHostController: NavHostController) {
                         },
                         icon = {
                             Icon(
-                                painter = painterResource(id = R.drawable.facebook),
+                                painter = painterResource(it.painterId),
                                 contentDescription = stringResource(
                                     id = R.string.explore
                                 ),
