@@ -371,7 +371,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     ) {
 
                         Image(
-                            painter = painterResource(id = R.drawable.check_box),
+                            painter = painterResource(id = R.drawable.google),
                             contentDescription ="" ,
                             modifier = Modifier.clickable {  }
                         )
