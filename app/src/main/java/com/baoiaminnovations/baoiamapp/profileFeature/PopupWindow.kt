@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.canhub.cropper.CropImageContract
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -60,13 +61,14 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         context.applicationContext.packageName + ".provider", file
     )
 
-  //  var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
+    //var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val camlauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) {
         imageUri.value = uri
+
     }
 
 

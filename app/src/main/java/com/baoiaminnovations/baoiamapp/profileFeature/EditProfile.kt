@@ -1,11 +1,9 @@
 package com.baoiaminnovations.baoiamapp.profileFeature
 
-import android.content.Intent
-import android.graphics.Bitmap
+
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,50 +17,33 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Visibility
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
-import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
-import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
-import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,23 +64,23 @@ fun EditProfile(navHostController: NavHostController) {
 
         val (image, fullname, phone, email, password2, button, popup) = createRefs()
 
-        var username = remember {
+        val username = remember {
             mutableStateOf("")
         }
-        var phoneNo = remember {
+        val phoneNo = remember {
             mutableStateOf("")
         }
-        var emailadd = remember {
+        val emailadd = remember {
             mutableStateOf("")
         }
-        var password = remember {
+        val password = remember {
             mutableStateOf("")
         }
-        var visibility = remember {
+        val visibility = remember {
             mutableStateOf(true)
         }
 
-        var imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
+        val imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
 
         Box(modifier = Modifier.constrainAs(image) {
@@ -110,7 +91,10 @@ fun EditProfile(navHostController: NavHostController) {
             if (imageUri.value == Uri.EMPTY) {
                 Image(
                     painter = painterResource(id = R.drawable.group_615),
-                    contentDescription = "Empty profile picture"
+                    contentDescription = "Empty profile picture",
+                    modifier = Modifier .clickable {
+                        isPopupVisible = true
+                    }   // Navigate to camera and album popup
                 )
             } else {
                 AsyncImage(
@@ -121,24 +105,8 @@ fun EditProfile(navHostController: NavHostController) {
                         .clip(CircleShape)
                         .background(Color.White)
                 )
-            }
 
-            Image(painter = painterResource(
-                id = R.drawable.group_616
-            ), contentDescription = "", modifier = Modifier
-                .padding(top = 70.dp, start = 70.dp)
-                .size(25.dp)
-                .clip(CircleShape)
-                .clickable {
-                    isPopupVisible = true
-                }   // Navigate to camera and album popup
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            LinearGradient, LinearGradient2
-                        )
-                    )
-                ))
+            }
 
         }
         // Code Snippet For Text field fullname

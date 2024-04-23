@@ -83,4 +83,6 @@ dependencies {
     //COIL
     implementation("io.coil-kt:coil-compose:2.6.0")
 
+    implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
+
 }
