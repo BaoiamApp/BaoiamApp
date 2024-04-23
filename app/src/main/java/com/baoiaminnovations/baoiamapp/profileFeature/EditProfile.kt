@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -109,8 +110,19 @@ fun EditProfile(navHostController: NavHostController) {
         }) {
             if (imageUri.value == Uri.EMPTY) {
                 Image(
-                    painter = painterResource(id = R.drawable.group_615),
-                    contentDescription = "Empty profile picture"
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "Empty profile picture",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            isPopupVisible = true
+                        }
+                        .border(
+                            3.dp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            shape = CircleShape
+                        ).padding(20.dp)
                 )
             } else {
                 AsyncImage(
@@ -119,26 +131,27 @@ fun EditProfile(navHostController: NavHostController) {
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
+                        .background(Color.White),
+                    contentScale = ContentScale.Crop
                 )
             }
 
-            Image(painter = painterResource(
-                id = R.drawable.group_616
-            ), contentDescription = "", modifier = Modifier
-                .padding(top = 70.dp, start = 70.dp)
-                .size(25.dp)
-                .clip(CircleShape)
-                .clickable {
-                    isPopupVisible = true
-                }   // Navigate to camera and album popup
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            LinearGradient, LinearGradient2
-                        )
-                    )
-                ))
+            /*        Image(painter = painterResource(
+                        id = R.drawable.group_616
+                    ), contentDescription = "", modifier = Modifier
+                        .padding(top = 70.dp, start = 70.dp)
+                        .size(25.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            isPopupVisible = true
+                        }   // Navigate to camera and album popup
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    LinearGradient, LinearGradient2
+                                )
+                            )
+                        ))*/
 
         }
         // Code Snippet For Text field fullname
