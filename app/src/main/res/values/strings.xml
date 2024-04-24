@@ -54,4 +54,6 @@
     <string name="search">Search</string>
     <string name="mic">Mic</string>
     <string name="offer">Offer</string>
+    <string name="title_activity_scholarship_screen">ScholarshipScreen</string>
+    <string name="title_activity_popular_search_screen">PopularSearchScreen</string>
 </resources>

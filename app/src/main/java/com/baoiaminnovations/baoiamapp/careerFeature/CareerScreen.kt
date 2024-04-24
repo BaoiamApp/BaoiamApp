@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,13 +38,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CareerScreen() {
+fun CareerScreen(navController: NavController) {
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
@@ -67,14 +70,15 @@ fun CareerScreen() {
             )
         }
 
-        Image(
+        ImageClickable(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp),
             painter = painterResource(id = R.drawable.offer),
             contentDescription = stringResource(id = R.string.offer),
-            contentScale = ContentScale.Crop
+            onClick = { navController.navigate("scholarship") }
         )
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -96,8 +100,24 @@ fun CareerScreen() {
     }
 }
 
+@Composable
+fun ImageClickable(
+    modifier: Modifier = Modifier,
+    painter: Painter,
+    contentDescription: String?,
+    onClick: () -> Unit
+) {
+    Image(
+        modifier = modifier
+            .clickable(onClick = onClick),
+        painter = painter,
+        contentDescription = contentDescription
+    )
+}
+
 @Preview
 @Composable
 fun CareerScreenPreview() {
-    CareerScreen()
+    val navController = rememberNavController()
+    CareerScreen(navController = navController)
 }
