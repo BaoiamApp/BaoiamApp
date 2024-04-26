@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,6 +85,8 @@ fun SignInScreen(
         mutableStateOf(true)
     }
 
+    val showCircularProgress = mutableStateOf(false)
+
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -124,13 +128,17 @@ fun SignInScreen(
             onClick = {
                 val result = viewModel.signInAuthenticate(username.value, password.value)
                 if (result == Constants.VALIDATION_PASSED) {
+                    showCircularProgress.value = true
                     viewModel.signIn(username.value, password.value)
                     viewModel.resultSignIn.observe(activity) {
                         if (it == Constants.SUCCESS) {
+                            showCircularProgress.value = false
                             navHostController.popBackStack()
                             navHostController.navigate(Screens.ExploreScreen.route)
+
                         } else if (it == Constants.FAILURE) {
                             Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                            showCircularProgress.value = false
                         }
                     }
                 } else {
@@ -162,7 +170,19 @@ fun SignInScreen(
                     .height(45.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(id = R.string.login))
+                Row {
+                    Text(text = stringResource(id = R.string.login))
+                    Spacer(modifier = Modifier.width(5.dp))
+                    if (showCircularProgress.value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(25.dp)
+                                .height(25.dp),
+                            color = Color.White
+                        )
+                    }
+                }
+
             }
 
         }

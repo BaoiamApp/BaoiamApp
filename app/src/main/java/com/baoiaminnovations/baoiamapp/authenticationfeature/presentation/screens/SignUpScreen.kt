@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -76,6 +78,8 @@ fun SignUpScreen(
         mutableStateOf(true)
     }
 
+    val showCircularProgress = mutableStateOf(false)
+
     var result = remember { mutableStateOf("") }
 
     val context = LocalContext.current
@@ -127,13 +131,16 @@ fun SignUpScreen(
                     confirmPassword.value
                 )
                 if (result == Constants.VALIDATION_PASSED) {
+                    showCircularProgress.value = true
                     viewModel.signUp(name.value, emailOrNumber.value, password.value)
                     viewModel.result.observe(activity) {
                         if (it == Constants.SUCCESS) {
+                            showCircularProgress.value = false
                             navHostController.popBackStack()
                             navHostController.navigate(Screens.AccountCreatedScreen.route)
 
                         } else if (it == Constants.FAILURE) {
+                            showCircularProgress.value = false
                             Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -167,7 +174,18 @@ fun SignUpScreen(
                     .height(45.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(id = R.string.signup))
+                Row {
+                    Text(text = stringResource(id = R.string.signup))
+                    Spacer(modifier = Modifier.width(5.dp))
+                    if (showCircularProgress.value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(25.dp)
+                                .height(25.dp),
+                            color = Color.White
+                        )
+                    }
+                }
             }
         }
         Text(
