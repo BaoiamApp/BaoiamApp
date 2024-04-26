@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens.AccountCreated
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens.CreateNewPassword
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens.ForgotPassword
@@ -17,14 +18,15 @@ import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnboardingScree
 
 fun NavGraphBuilder.authenticationGraph(
     navHostController: NavHostController,
-    viewModel: AppViewModel
+    viewModel: AppViewModel,
+    activity: MainActivity
 ) {
     navigation(startDestination = Screens.SignInScreen.route, route = authenticationGraph) {
         composable(route = Screens.SignInScreen.route) {
             SignInScreen(navHostController)
         }
         composable(route = Screens.SignUpScreen.route) {
-            SignUpScreen(navHostController = navHostController, viewModel)
+            SignUpScreen(navHostController = navHostController, viewModel,activity)
         }
         composable(route = Screens.ForgotPassword.route) {
             ForgotPassword(navHostController)

@@ -38,11 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel) {
+fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel,activity: MainActivity) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     Scaffold(bottomBar = {
@@ -123,7 +124,7 @@ fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel) {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onPrimary)
         ) {
-            NavHost(navHostController = navHostController,viewModel)
+            NavHost(navHostController = navHostController,viewModel,activity)
         }
     }
 }

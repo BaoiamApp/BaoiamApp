@@ -42,15 +42,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signUpAuthentication
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable
-fun SignUpScreen(navHostController: NavHostController, viewModel: AppViewModel) {
+fun SignUpScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     var name = remember {
         mutableStateOf("")
     }
@@ -121,10 +127,18 @@ fun SignUpScreen(navHostController: NavHostController, viewModel: AppViewModel) 
                     confirmPassword.value
                 )
                 if (result == "Correct") {
-                    Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show()
+                    viewModel.signUp(name.value, emailOrNumber.value, password.value)
+                    viewModel.result.observe(activity) {
+                        if (it == Constants.SUCCESS) {
+                            navHostController.navigate(Screens.AccountCreatedScreen.route)
+                        } else if (it == Constants.FAILURE) {
+                            Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } else {
                     Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
                 }
+
                 //navHostController.navigate(Screens.AccountCreatedScreen.route)
             },
             modifier = Modifier
