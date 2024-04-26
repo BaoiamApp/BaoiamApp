@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.profileFeature
+package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 
 import androidx.compose.foundation.BorderStroke

@@ -1,7 +1,5 @@
-package com.baoiaminnovations.baoiamapp.profileFeature
+package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,57 +17,45 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Visibility
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
-import com.baoiaminnovations.baoiamapp.common.presentation.Screens
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
-import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
-import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun EditProfile(navHostController: NavHostController) {
+fun EditProfile(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
 
     var isPopupVisible by remember { mutableStateOf(false) }
     //var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -102,6 +88,12 @@ fun EditProfile(navHostController: NavHostController) {
 
         var imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
+        viewModel.getDataOfUser()
+        viewModel.getDataOfUser.observe(activity) {
+            username.value = it.name
+            emailadd.value = it.emailOrPhoneNumber
+            phoneNo.value = it.phoneNumber
+        }
 
         Box(modifier = Modifier.constrainAs(image) {
             top.linkTo(parent.top, margin = 30.dp)
@@ -122,7 +114,8 @@ fun EditProfile(navHostController: NavHostController) {
                             3.dp,
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             shape = CircleShape
-                        ).padding(20.dp)
+                        )
+                        .padding(20.dp)
                 )
             } else {
                 AsyncImage(

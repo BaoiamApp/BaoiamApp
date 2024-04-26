@@ -7,8 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.baoiaminnovations.baoiamapp.authenticationfeature.data.SignInRepo
 import com.baoiaminnovations.baoiamapp.authenticationfeature.data.SignUpRepo
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signInAuthentication
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signUpAuthentication
+import com.baoiaminnovations.baoiamapp.profileFeature.data.GetTheUserData
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,11 +22,15 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     private val application: Application,
     private val signUpRepo: SignUpRepo,
-    private val signInRepo: SignInRepo
+    private val signInRepo: SignInRepo,
+    private val getTheUserData: GetTheUserData
 ) : AndroidViewModel(application) {
 
     var result = MutableLiveData<String>()
     var resultSignIn = MutableLiveData<String>()
+    var userModelForUserName = mutableStateOf<userModel?>(userModel())
+    var getDataOfUser = MutableLiveData<userModel>()
+
     fun signUpAuthenticate(
         name: String,
         emailOrPhoneNumber: String,
@@ -43,5 +53,18 @@ class AppViewModel @Inject constructor(
 
     fun signIn(name: String, password: String) {
         resultSignIn = signInRepo.signInUser(name, password)
+    }
+
+    fun getUserName(): String {
+        val firestore = Firebase.firestore
+        val result = firestore.collection("users").document(Firebase.auth.uid!!).get()
+        result.addOnSuccessListener {
+            userModelForUserName.value = it.toObject<userModel>()
+        }
+        return userModelForUserName.value?.name ?: ""
+    }
+
+    fun getDataOfUser() {
+        getDataOfUser = getTheUserData.getData()
     }
 }

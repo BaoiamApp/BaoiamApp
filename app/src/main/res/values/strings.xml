@@ -49,7 +49,7 @@
     <string name="enterYourEmail">Enter your email</string>
     <string name="save">save</string>
     <string name="profilePic">Profile Picture of the user</string>
-    <string name="welcome">Welcome User</string>
+    <string name="welcome">Welcome, </string>
     <string name="whatDoYouWantToLearn">What do you want to learn ?</string>
     <string name="search">Search</string>
     <string name="mic">Mic</string>

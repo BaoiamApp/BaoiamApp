@@ -16,7 +16,7 @@ fun NavHost(
         startDestination = authenticationGraph
     ) {
         onboardingGraph(navHostController)
-        authenticationGraph(navHostController, viewModel,activity)
-        mainScreenGraph(navHostController)
+        authenticationGraph(navHostController, viewModel, activity)
+        mainScreenGraph(navHostController, viewModel, activity)
     }
 }

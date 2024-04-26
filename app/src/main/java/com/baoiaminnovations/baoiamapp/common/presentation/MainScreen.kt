@@ -28,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,12 +41,24 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel,activity: MainActivity) {
+fun MainScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    var userModel: userModel? = userModel()
+
+
     Scaffold(bottomBar = {
 
         if (currentDestination?.route == Screens.ExploreScreen.route || currentDestination?.route == Screens.MyCourseScreen.route
@@ -109,7 +122,7 @@ fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel,acti
                                 .padding(5.dp)
                         )
                         Spacer(modifier = Modifier.width(5.dp))
-                        Text(text = stringResource(id = R.string.welcome))
+                        Text(text = stringResource(id = R.string.welcome) + viewModel.userModelForUserName.value?.name)
                     }
                 }, actions = {
                     IconButton(onClick = { navHostController.navigate(Screens.SettingsScreen.route) }) {
@@ -124,7 +137,7 @@ fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel,acti
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onPrimary)
         ) {
-            NavHost(navHostController = navHostController,viewModel,activity)
+            NavHost(navHostController = navHostController, viewModel, activity)
         }
     }
 }

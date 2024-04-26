@@ -1,26 +1,27 @@
 package com.baoiaminnovations.baoiamapp.common.presentation
 
-import android.graphics.ImageDecoder
-import android.os.Build
-import android.provider.MediaStore
-import androidx.compose.foundation.Image
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.activity
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.careerFeature.CareerScreen
 import com.baoiaminnovations.baoiamapp.exploreFeature.screens.ExploreScreen
 import com.baoiaminnovations.baoiamapp.myCourseFeature.MyCourse
 
-import com.baoiaminnovations.baoiamapp.profileFeature.EditProfile
-import com.baoiaminnovations.baoiamapp.profileFeature.PopUpWindow
-import com.baoiaminnovations.baoiamapp.profileFeature.ProfileScreen
+import com.baoiaminnovations.baoiamapp.profileFeature.presentation.EditProfile
+import com.baoiaminnovations.baoiamapp.profileFeature.presentation.ProfileScreen
 import com.baoiaminnovations.baoiamapp.settingsfeature.SettingsScreen
 
-fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
+fun NavGraphBuilder.mainScreenGraph(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     navigation(startDestination = Screens.ExploreScreen.route, route = mainScreenGraph) {
         composable(Screens.ExploreScreen.route) {
-            ExploreScreen(navHostController)
+            ExploreScreen(navHostController, viewModel)
         }
         composable(Screens.MyCourseScreen.route) {
             MyCourse()
@@ -32,7 +33,8 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
             ProfileScreen(navHostController)
         }
         composable(Screens.EditProfile.route) {
-            EditProfile(navHostController)}
+            EditProfile(navHostController, viewModel, activity)
+        }
 
         /*composable(Screens.PopupWindow.route) {
             PopUpWindow(navHostController)
