@@ -1,5 +1,6 @@
 package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,6 +42,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -55,14 +57,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(navHostController: NavHostController) {
+fun SignInScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     var username = remember {
         mutableStateOf("")
     }
@@ -73,6 +82,8 @@ fun SignInScreen(navHostController: NavHostController) {
     var visibility = remember {
         mutableStateOf(true)
     }
+
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,7 +121,23 @@ fun SignInScreen(navHostController: NavHostController) {
             Text(text = stringResource(id = R.string.forgetPassword))
         }
         Button(
-            onClick = { navHostController.navigate(Screens.ExploreScreen.route) },
+            onClick = {
+                val result = viewModel.signInAuthenticate(username.value, password.value)
+                if (result == Constants.VALIDATION_PASSED) {
+                    viewModel.signIn(username.value, password.value)
+                    viewModel.resultSignIn.observe(activity) {
+                        if (it == Constants.SUCCESS) {
+                            navHostController.popBackStack()
+                            navHostController.navigate(Screens.ExploreScreen.route)
+                        } else if (it == Constants.FAILURE) {
+                            Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                }
+                //
+            },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)

@@ -1,5 +1,6 @@
 package com.baoiaminnovations.baoiamapp.di
 
+import com.baoiaminnovations.baoiamapp.authenticationfeature.data.SignInRepo
 import com.baoiaminnovations.baoiamapp.authenticationfeature.data.SignUpRepo
 import dagger.Module
 import dagger.Provides
@@ -12,4 +13,7 @@ class AppModule {
 
     @Provides
     fun signUpRepo() = SignUpRepo()
+
+    @Provides
+    fun signInRepo() = SignInRepo()
 }

@@ -50,7 +50,10 @@ fun AccountCreated(navHostController: NavHostController) {
         )
         Text(text = stringResource(id = R.string.loginUsingUsernameAndPassword))
         Button(
-            onClick = { navHostController.navigate(Screens.SignInScreen.route) },
+            onClick = {
+                navHostController.popBackStack()
+                navHostController.navigate(Screens.SignInScreen.route)
+            },
             modifier = Modifier
                 .width(350.dp)
                 .padding(top = 30.dp),

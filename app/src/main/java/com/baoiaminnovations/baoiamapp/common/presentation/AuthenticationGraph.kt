@@ -23,10 +23,10 @@ fun NavGraphBuilder.authenticationGraph(
 ) {
     navigation(startDestination = Screens.SignInScreen.route, route = authenticationGraph) {
         composable(route = Screens.SignInScreen.route) {
-            SignInScreen(navHostController)
+            SignInScreen(navHostController, viewModel, activity)
         }
         composable(route = Screens.SignUpScreen.route) {
-            SignUpScreen(navHostController = navHostController, viewModel,activity)
+            SignUpScreen(navHostController = navHostController, viewModel, activity)
         }
         composable(route = Screens.ForgotPassword.route) {
             ForgotPassword(navHostController)

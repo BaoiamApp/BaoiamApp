@@ -126,11 +126,13 @@ fun SignUpScreen(
                     password.value,
                     confirmPassword.value
                 )
-                if (result == "Correct") {
+                if (result == Constants.VALIDATION_PASSED) {
                     viewModel.signUp(name.value, emailOrNumber.value, password.value)
                     viewModel.result.observe(activity) {
                         if (it == Constants.SUCCESS) {
+                            navHostController.popBackStack()
                             navHostController.navigate(Screens.AccountCreatedScreen.route)
+
                         } else if (it == Constants.FAILURE) {
                             Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
                         }
