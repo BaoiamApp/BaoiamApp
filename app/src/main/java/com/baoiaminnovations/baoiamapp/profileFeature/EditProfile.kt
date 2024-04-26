@@ -58,8 +58,8 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient

@@ -1,7 +1,8 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,50 +29,54 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable
-fun ForgotPassword(navHostController: NavHostController) {
-    var emailOrNumber = remember {
-        mutableStateOf("")
-    }
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
+fun CreateNewPassword(navHostController: NavHostController) {
+
+    var password = remember { mutableStateOf("") }
+    var confirmPassword = remember { mutableStateOf("") }
+
+    var passwordVisibility = remember { mutableStateOf(false) }
+    var confirmPasswordVisibility = remember { mutableStateOf(false) }
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
-            painter = painterResource(id = R.drawable.forgotpassword),
-            contentDescription = "Forgot Password",
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "logo",
             modifier = Modifier
-                .width(300.dp)
-                .height(450.dp)
-                .padding(10.dp),
+                .width(200.dp)
+                .height(300.dp),
             contentScale = ContentScale.Fit
         )
         Text(
-            text = stringResource(id = R.string.forgotPassword),
+            text = stringResource(id = R.string.createNewPassword),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             style = TextStyle(
                 lineHeight = 0.em
             ),
-            modifier = Modifier.offset(y = (-20).dp)
+            modifier = Modifier.offset(y = (-40).dp)
         )
-        Text(
-            text = stringResource(id = R.string.enterYourRegisteredEmailOrPhoneNo),
-            fontSize = 15.sp,
-            textAlign = TextAlign.Center,
-            color = Color.Gray,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+        PasswordTextField(
+            password = password,
+            visibility = passwordVisibility,
+            id = R.string.password
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        BasicTextField(text = emailOrNumber, id = R.string.emailPhonenumber)
+        Spacer(modifier = Modifier.height(5.dp))
+        PasswordTextField(
+            password = confirmPassword,
+            visibility = confirmPasswordVisibility,
+            id = R.string.confirmPassword
+        )
         Button(
-            onClick = { navHostController.navigate(Screens.OtpVerificationScreen.route) },
+            onClick = { navHostController.navigate(Screens.PasswordUpdatedScreen.route) },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)
@@ -96,9 +101,10 @@ fun ForgotPassword(navHostController: NavHostController) {
                     .height(45.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(id = R.string.sendCode))
+                Text(text = stringResource(id = R.string.resetPassword))
             }
 
         }
     }
+
 }

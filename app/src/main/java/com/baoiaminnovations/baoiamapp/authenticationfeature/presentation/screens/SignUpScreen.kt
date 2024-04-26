@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable

@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

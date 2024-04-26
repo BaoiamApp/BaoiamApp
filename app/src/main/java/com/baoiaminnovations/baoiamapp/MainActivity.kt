@@ -16,7 +16,9 @@ import com.baoiaminnovations.baoiamapp.common.presentation.MainScreen
 
 import com.baoiaminnovations.baoiamapp.common.presentation.NavHost
 import com.baoiaminnovations.baoiamapp.ui.theme.BaoiamAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
