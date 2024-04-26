@@ -1,5 +1,6 @@
 package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -41,12 +43,14 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signUpAuthentication
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable
-fun SignUpScreen(navHostController: NavHostController) {
+fun SignUpScreen(navHostController: NavHostController, viewModel: AppViewModel) {
     var name = remember {
         mutableStateOf("")
     }
@@ -65,6 +69,11 @@ fun SignUpScreen(navHostController: NavHostController) {
     var passwordConfirmVisibility = remember {
         mutableStateOf(true)
     }
+
+    var result = remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val performSignUpValidation = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,7 +113,20 @@ fun SignUpScreen(navHostController: NavHostController) {
             id = R.string.confirmPassword
         )
         Button(
-            onClick = { navHostController.navigate(Screens.AccountCreatedScreen.route) },
+            onClick = {
+                val result = viewModel.signUpAuthenticate(
+                    name.value,
+                    emailOrNumber.value,
+                    password.value,
+                    confirmPassword.value
+                )
+                if (result == "Correct") {
+                    Toast.makeText(context, "Accepted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                }
+                //navHostController.navigate(Screens.AccountCreatedScreen.route)
+            },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)

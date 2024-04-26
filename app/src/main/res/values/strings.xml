@@ -55,4 +55,13 @@
     <string name="mic">Mic</string>
     <string name="offer">Offer</string>
     <string name="logout_text">You are about to logout \nAre you sure this is what \nyou want?</string>
+    <string name="enterName">Please enter name</string>
+    <string name="enterEmailOrPhoneNumber">Please enter email or phone number</string>
+    <string name="enterPhoneNumber">Please enter phone number</string>
+    <string name="enterPassword">Please enter password</string>
+    <string name="enterConfirmPassword">Please enter password to confirm</string>
+    <string name="emailValidation">This is not a valid email</string>
+    <string name="phoneNumberValidation">Please enter 10 digit number</string>
+    <string name="passwordValidation">Confirm password did not match</string>
+    <string name="validationAccepted">Correct</string>
 </resources>

@@ -15,13 +15,16 @@ import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnBoardingScree
 import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnBoardingScreen2
 import com.baoiaminnovations.baoiamapp.onboardingfeature.screens.OnboardingScreen3
 
-fun NavGraphBuilder.authenticationGraph(navHostController: NavHostController) {
+fun NavGraphBuilder.authenticationGraph(
+    navHostController: NavHostController,
+    viewModel: AppViewModel
+) {
     navigation(startDestination = Screens.SignInScreen.route, route = authenticationGraph) {
         composable(route = Screens.SignInScreen.route) {
             SignInScreen(navHostController)
         }
         composable(route = Screens.SignUpScreen.route) {
-            SignUpScreen(navHostController = navHostController)
+            SignUpScreen(navHostController = navHostController, viewModel)
         }
         composable(route = Screens.ForgotPassword.route) {
             ForgotPassword(navHostController)

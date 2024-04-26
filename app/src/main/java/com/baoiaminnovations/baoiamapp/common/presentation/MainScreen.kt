@@ -42,7 +42,7 @@ import com.baoiaminnovations.baoiamapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navHostController: NavHostController) {
+fun MainScreen(navHostController: NavHostController,viewModel: AppViewModel) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     Scaffold(bottomBar = {
@@ -123,7 +123,7 @@ fun MainScreen(navHostController: NavHostController) {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onPrimary)
         ) {
-            NavHost(navHostController = navHostController)
+            NavHost(navHostController = navHostController,viewModel)
         }
     }
 }
