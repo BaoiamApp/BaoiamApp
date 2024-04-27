@@ -13,9 +13,17 @@ import com.baoiaminnovations.baoiamapp.exploreFeature.screens.ExploreScreen
 import com.baoiaminnovations.baoiamapp.myCourseFeature.MyCourse
 
 import com.baoiaminnovations.baoiamapp.profileFeature.EditProfile
-import com.baoiaminnovations.baoiamapp.profileFeature.PopUpWindow
+
 import com.baoiaminnovations.baoiamapp.profileFeature.ProfileScreen
+import com.baoiaminnovations.baoiamapp.settingsfeature.AboutUs
+import com.baoiaminnovations.baoiamapp.settingsfeature.AppLanguage
+import com.baoiaminnovations.baoiamapp.settingsfeature.ChatBot
+import com.baoiaminnovations.baoiamapp.settingsfeature.ContactUs
+import com.baoiaminnovations.baoiamapp.settingsfeature.GeneralSetting
+import com.baoiaminnovations.baoiamapp.settingsfeature.HelpAndSupport
+import com.baoiaminnovations.baoiamapp.settingsfeature.NotificatiinSetting
 import com.baoiaminnovations.baoiamapp.settingsfeature.SettingsScreen
+import com.baoiaminnovations.baoiamapp.settingsfeature.Transactions
 
 fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
     navigation(startDestination = Screens.ExploreScreen.route, route = mainScreenGraph) {
@@ -32,16 +40,34 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
             ProfileScreen(navHostController)
         }
         composable(Screens.EditProfile.route) {
-            EditProfile(navHostController)}
-
-        /*composable(Screens.PopupWindow.route) {
-            PopUpWindow(navHostController)
-        }*/
-        /*composable(Screens.CapturedImage.route) {
-            CapturedImage()
-        }*/
+            EditProfile(navHostController)
+        }
         composable(Screens.SettingsScreen.route) {
-            SettingsScreen()
+            SettingsScreen(navHostController)
+        }
+        composable(Screens.GeneralSetting.route) {
+            GeneralSetting(navHostController)
+        }
+        composable(Screens.NotificationSetting.route) {
+            NotificatiinSetting()
+        }
+        composable(Screens.AppLanguage.route) {
+            AppLanguage()
+        }
+        composable(Screens.Transactions.route) {
+            Transactions()
+        }
+        composable(Screens.HelpAndSupport.route) {
+            HelpAndSupport(navHostController)
+        }
+        composable(Screens.ChatBot.route) {
+            ChatBot()
+        }
+        composable(Screens.ContactUs.route) {
+            ContactUs()
+        }
+        composable(Screens.AboutUs.route) {
+            AboutUs()
         }
     }
 }

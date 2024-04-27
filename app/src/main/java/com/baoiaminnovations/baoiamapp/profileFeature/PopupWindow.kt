@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -50,10 +51,15 @@ import java.util.Date
 import java.util.Objects
 
 
-@Composable
-fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>) {
 
-    var context = LocalContext.current
+
+
+@Composable
+fun PopUpWindow(imageUri:MutableState<Uri>) {
+
+
+
+    val context = LocalContext.current
 
     val file = context.createImageFile()
     val uri = FileProvider.getUriForFile(
@@ -61,9 +67,7 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         context.applicationContext.packageName + ".provider", file
     )
 
-    //var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
 
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val camlauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) {
@@ -76,19 +80,7 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri.value = uri!!
         }
-    /*  imageUri?.let {
-          if (Build.VERSION.SDK_INT < 28) {
-              bitmap = MediaStore.Images
-                  .Media.getBitmap(context.contentResolver, it)
-          } else {
-              val source = ImageDecoder.createSource(context.contentResolver, it)
-              bitmap = ImageDecoder.decodeBitmap(source)
-          }
-          bitmap?.let { btm ->
-              Image(bitmap = btm.asImageBitmap(), contentDescription = null)
-          }
 
-      }*/
 
     val permission = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
@@ -125,7 +117,7 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         // Code Snippet For Image "Camera"
 
         Box(modifier = Modifier
-            .size(80.dp)
+            .size(60.dp)
             .clip(shape = RoundedCornerShape(10.dp))
             .clickable {
 
@@ -157,7 +149,7 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         // Code Snippet For Image "Photos"
 
         Box(modifier = Modifier
-            .size(80.dp)
+            .size(60.dp)
             .clip(shape = RoundedCornerShape(10.dp))
             .clickable {
                 photolauncher.launch("image/*")
@@ -196,7 +188,8 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
             .height(20.dp)
             .constrainAs(txtcamera) {
                 top.linkTo(camera.bottom, margin = 16.dp)
-                start.linkTo(parent.start, margin = 20.dp)
+                start.linkTo(camera.start)
+                end.linkTo(camera.end)
             }) {
             Text(
                 text = "Camera",
@@ -212,9 +205,9 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
             .width(80.dp)
             .height(20.dp)
             .constrainAs(txtphoto) {
-                top.linkTo(txtcamera.top)
-                bottom.linkTo(txtcamera.bottom)
-                start.linkTo(txtcamera.end, margin = 30.dp)
+                top.linkTo(photos.bottom,margin = 16.dp)
+                start.linkTo(photos.start)
+                end.linkTo(photos.end)
             }) {
             Text(
                 text = "Albums",

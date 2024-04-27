@@ -54,5 +54,18 @@
     <string name="search">Search</string>
     <string name="mic">Mic</string>
     <string name="offer">Offer</string>
+    <string name="contact_us">You can get in touch with us through below platforms. Our team will reach out to you as soon as possible.</string>
+    <string name="chatwithus_text">Lorem ipsum dolor sit\namet,consectetur adipiscing elit</string>
+    <string name="help_support_about_us">Lorem ipsum dolor sit amet,consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et
+                    dolore magna aliqua.Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip
+                    ex ea commodo consequat.</string>
+    <string name="our_story">Lorem ipsum dolor sit amet,consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+        nulla pariatur.Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="logout_text">You are about to logout \nAre you sure this is what \nyou want?</string>
 </resources>

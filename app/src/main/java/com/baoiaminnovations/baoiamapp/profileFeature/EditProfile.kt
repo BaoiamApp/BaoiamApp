@@ -52,8 +52,7 @@ import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
 fun EditProfile(navHostController: NavHostController) {
 
     var isPopupVisible by remember { mutableStateOf(false) }
-    //var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    //var context = LocalContext.current
+
 
 
     ConstraintLayout(
@@ -83,11 +82,13 @@ fun EditProfile(navHostController: NavHostController) {
         val imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
 
-        Box(modifier = Modifier.constrainAs(image) {
+        Box(
+            modifier = Modifier.constrainAs(image) {
             top.linkTo(parent.top, margin = 30.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         }) {
+
             if (imageUri.value == Uri.EMPTY) {
                 Image(
                     painter = painterResource(id = R.drawable.group_615),
@@ -97,6 +98,7 @@ fun EditProfile(navHostController: NavHostController) {
                     }   // Navigate to camera and album popup
                 )
             } else {
+
                 AsyncImage(
                     model = imageUri.value,
                     contentDescription = "",
@@ -104,6 +106,7 @@ fun EditProfile(navHostController: NavHostController) {
                         .size(100.dp)
                         .clip(CircleShape)
                         .background(Color.White)
+                        .clickable { isPopupVisible = true }
                 )
 
             }
@@ -111,7 +114,8 @@ fun EditProfile(navHostController: NavHostController) {
         }
         // Code Snippet For Text field fullname
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
             .constrainAs(fullname) {
@@ -133,7 +137,8 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field email
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
             .fillMaxWidth()
             .constrainAs(email) {
                 top.linkTo(phone.bottom, margin = 20.dp)
@@ -153,7 +158,8 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field phone
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
             .fillMaxWidth()
             .constrainAs(phone) {
                 top.linkTo(fullname.bottom, margin = 20.dp)
@@ -205,7 +211,8 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field password
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
             .fillMaxWidth()
             .constrainAs(password2) {
                 top.linkTo(email.bottom, margin = 20.dp)
@@ -228,7 +235,8 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Button save
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
             .width(160.dp)
             .height(44.dp)
             .constrainAs(button) {
@@ -238,9 +246,9 @@ fun EditProfile(navHostController: NavHostController) {
 
             }) {
 
-            Button1Preview(text = stringResource(id = R.string.save),
-                onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
-                ,
+            Button1Preview(
+                text = stringResource(id = R.string.save),
+                onClick = { /*TODO*/ },  // Save the information's and navigate to profile screen
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .fillMaxSize()
@@ -250,7 +258,8 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Popup Window Initialization
 
-        Box(modifier = Modifier
+        Box(
+            modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
@@ -260,8 +269,10 @@ fun EditProfile(navHostController: NavHostController) {
                 end.linkTo(parent.end)
             }) {
             if (isPopupVisible) {
-                ModalBottomSheet(onDismissRequest = { isPopupVisible = false }) {
-                    PopUpWindow(navHostController, imageUri)
+                ModalBottomSheet(
+                    onDismissRequest = { isPopupVisible = false }
+                ) {
+                    PopUpWindow(imageUri)
                 }
 
             }
