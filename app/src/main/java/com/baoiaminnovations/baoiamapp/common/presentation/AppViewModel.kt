@@ -1,6 +1,7 @@
 package com.baoiaminnovations.baoiamapp.common.presentation
 
 import android.app.Application
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -95,11 +96,12 @@ class AppViewModel @Inject constructor(
         )
     }
 
-    fun phoneSignIn(phoneNumber: String, activity: MainActivity) {
+    fun phoneSignIn(phoneNumber: String, activity: MainActivity,showDialogBox:MutableState<Boolean>) {
         phoneSIgnInRepo.phoneSignIn(
             phoneNumber,
             activity,
-            resultOfPhoneSignIn
+            resultOfPhoneSignIn,
+            showDialogBox
         )
     }
 

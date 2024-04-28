@@ -64,4 +64,5 @@
     <string name="phoneNumberValidation">Please enter 10 digit number</string>
     <string name="passwordValidation">Confirm password did not match</string>
     <string name="validationAccepted">Correct</string>
+    <string name="enterOTP">Enter OTP</string>
 </resources>

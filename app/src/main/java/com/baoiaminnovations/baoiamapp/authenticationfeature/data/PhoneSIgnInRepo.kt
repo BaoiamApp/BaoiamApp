@@ -2,6 +2,7 @@ package com.baoiaminnovations.baoiamapp.authenticationfeature.data
 
 import android.app.Application
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.MutableLiveData
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
@@ -23,7 +24,8 @@ class PhoneSIgnInRepo {
     fun phoneSignIn(
         phoneNumber: String,
         activity: MainActivity,
-        returnValue: MutableLiveData<String>
+        returnValue: MutableLiveData<String>,
+        showDialogBox: MutableState<Boolean>
     ) {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber("+91$phoneNumber") // Phone number to verify
@@ -49,6 +51,7 @@ class PhoneSIgnInRepo {
                     token: PhoneAuthProvider.ForceResendingToken
                 ) {
                     super.onCodeSent(verificationId, token)
+                    showDialogBox.value = false
                     storedVerificationCode = verificationId
                 }
 

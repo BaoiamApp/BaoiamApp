@@ -19,13 +19,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +51,7 @@ import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.OtpTextFields
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
@@ -60,29 +64,31 @@ fun OtpVerificationForNumberLogin(
     name: String,
     phoneNumber: String
 ) {
-    var otp1 = remember {
+    var otp =
         mutableStateOf("")
-    }
-    var otp2 = remember {
-        mutableStateOf("")
-    }
-    var otp3 = remember {
-        mutableStateOf("")
-    }
-    var otp4 = remember {
-        mutableStateOf("")
-    }
+    /*    }
+        var otp2 = remember {
+            mutableStateOf("")
+        }
+        var otp3 = remember {
+            mutableStateOf("")
+        }
+        var otp4 = remember {
+            mutableStateOf("")
+        }
 
-    var otp5 = remember {
-        mutableStateOf("")
-    }
+        var otp5 = remember {
+            mutableStateOf("")
+        }
 
-    var otp6 = remember {
-        mutableStateOf("")
-    }
+        var otp6 = remember {
+            mutableStateOf("")
+        }*/
+
+    val showDialogBox = mutableStateOf(true)
 
     LaunchedEffect(key1 = name == "") {
-        viewModel.phoneSignIn(phoneNumber, activity)
+        viewModel.phoneSignIn(phoneNumber, activity,showDialogBox)
     }
 
     viewModel.resultOfPhoneSignIn.observe(activity) {
@@ -100,6 +106,9 @@ fun OtpVerificationForNumberLogin(
             .background(MaterialTheme.colorScheme.onPrimary)
             .verticalScroll(rememberScrollState()),
     ) {
+        if (showDialogBox.value) {
+            DialogBox(dismissDialog = showDialogBox)
+        }
         Image(
             painter = painterResource(id = R.drawable.enterotp),
             contentDescription = "Forgot Password",
@@ -136,20 +145,21 @@ fun OtpVerificationForNumberLogin(
                 .fillMaxSize()
                 .padding(start = 20.dp, end = 20.dp)
         ) {
-            OtpTextFields(number = otp1, labelTextId = R.string.default_otp)
-            Spacer(modifier = Modifier.width(20.dp))
-            OtpTextFields(number = otp2, labelTextId = R.string.default_otp)
-            Spacer(modifier = Modifier.width(20.dp))
-            OtpTextFields(number = otp3, labelTextId = R.string.default_otp)
-            Spacer(modifier = Modifier.width(20.dp))
-            OtpTextFields(number = otp4, labelTextId = R.string.default_otp)
-            OtpTextFields(number = otp5, labelTextId = R.string.default_otp)
-            OtpTextFields(number = otp6, labelTextId = R.string.default_otp)
+            BasicTextField(text = otp, id = R.string.enterOTP)
+            /*      OtpTextFields(number = otp1, labelTextId = R.string.default_otp)
+                  Spacer(modifier = Modifier.width(20.dp))
+                  OtpTextFields(number = otp2, labelTextId = R.string.default_otp)
+                  Spacer(modifier = Modifier.width(20.dp))
+                  OtpTextFields(number = otp3, labelTextId = R.string.default_otp)
+                  Spacer(modifier = Modifier.width(20.dp))
+                  OtpTextFields(number = otp4, labelTextId = R.string.default_otp)
+                  OtpTextFields(number = otp5, labelTextId = R.string.default_otp)
+                  OtpTextFields(number = otp6, labelTextId = R.string.default_otp)*/
         }
         Button(
             onClick = {
                 val code =
-                    "${otp1.value}${otp2.value}${otp3.value}${otp4.value}${otp5.value}${otp6.value}"
+                    otp.value
                 if (name.isNotEmpty()) {
                     viewModel.phoneSignUpWithCode(code, name, phoneNumber)
                     viewModel.resultOFPhoneSignUpWithCode.observe(activity) {
@@ -157,7 +167,8 @@ fun OtpVerificationForNumberLogin(
                             navHostController.popBackStack()
                             navHostController.navigate(Screens.ExploreScreen.route)
                         } else if (it == Constants.FAILURE) {
-                            Toast.makeText(context, "Failed to verify", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Failed to verify", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 } else if (name.isEmpty()) {
@@ -225,7 +236,25 @@ fun OtpVerificationForNumberLogin(
         if (it == Constants.SUCCESS) {
             navHostController.navigate(Screens.ExploreScreen.route)
         } else if (it == Constants.FAILURE) {
-            Toast.makeText(context, "Sign In Failed. Please try again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Sign In Failed. Please try again", Toast.LENGTH_SHORT)
+                .show()
         }
     }
+}
+
+@Composable
+fun DialogBox(dismissDialog: MutableState<Boolean>) {
+    AlertDialog(onDismissRequest = { dismissDialog.value = false }, confirmButton = {
+
+    }, title = {
+        Row {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp)
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = "Verifying and getting OTP")
+        }
+    })
 }
