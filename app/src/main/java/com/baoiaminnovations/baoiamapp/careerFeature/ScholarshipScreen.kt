@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -104,22 +105,36 @@ fun ScholarshipScreen() {
                     .padding(top = 8.dp)
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically ,
+                    horizontalArrangement = Arrangement.Center, // Center horizontally
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_black_hat),
                         contentDescription = "Apply for Scholarship",
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier
+                            .width(59.dp)
+                            .height(46.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Want to apply for scholarship?\nFill the given form",
-                        style = TextStyle(
-                            color = Color(0xFFFFA500), // Orange color
-                            fontSize = 20.sp // Text size 20sp
-                        ),
-                        modifier = Modifier.padding(top = 2.dp) // Adjust top padding for better alignment
-                    )
+                    Column {
+                        Text(
+                            text = "Want to apply for scholarship?",
+                            style = TextStyle(
+                                color = Color(0xFFFF810B), // Orange color
+                                fontSize = 20.sp // Text size 20sp
+                            ),
+                            modifier = Modifier.padding(top = 2.dp) // Adjust top padding for better alignment
+                        )
+                        Text(
+                            text = "Fill the given form",
+                            style = TextStyle(
+                                color = Color(0xFFFF810B), // Orange color
+                                fontSize = 20.sp // Text size 20sp
+                            ),
+                            modifier = Modifier.padding(start = 10.dp) // Adjust padding for better alignment
+                        )
+                    }
                 }
 
                 // Text field for entering name
