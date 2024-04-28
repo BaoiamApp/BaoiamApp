@@ -21,8 +21,14 @@ sealed class Screens(val route: String) {
     object MyCourseScreen : Screens("my_course_screen")
     object CareerScreen : Screens("career_screen")
     object ProfileScreen : Screens("profile_screen")
-    object EditProfile : Screens("edit_profile")
-    object PopupWindow : Screens("popup_window")
-    object CapturedImage : Screens("captured_image")
+    object EditProfile : Screens("edit_profile_screen")
+    object PopupWindow : Screens("popup_window_screen")
+    object CapturedImage : Screens("captured_image_screen")
     object SettingsScreen : Screens("settings_screen")
+    object OtpVerificationForNumberScreen :
+        Screens("otp_verification_for_number_screen/?name={name}/?phoneNumber={phoneNumber}") {
+        fun otpVerficationWIthNameAndPhoneNumber(name: String, phoneNumber: String): String {
+            return "otp_verification_for_number_screen/?name=$name/?phoneNumber=$phoneNumber"
+        }
+    }
 }

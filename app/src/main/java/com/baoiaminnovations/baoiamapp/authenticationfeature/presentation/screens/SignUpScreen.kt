@@ -26,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
@@ -82,6 +84,18 @@ fun SignUpScreen(
 
     var result = remember { mutableStateOf("") }
 
+    val showPasswordAndConfirmPasswordTextField = remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = emailOrNumber.value.length == 10) {
+        if (emailOrNumber.value.isDigitsOnly() && emailOrNumber.value.length == 10) {
+            showPasswordAndConfirmPasswordTextField.value = true
+        }
+    }
+
+    if (emailOrNumber.value.length < 10) {
+        showPasswordAndConfirmPasswordTextField.value = false
+    }
+
     val context = LocalContext.current
     val performSignUpValidation = remember { mutableStateOf(false) }
     Column(
@@ -111,17 +125,20 @@ fun SignUpScreen(
         )
 
         BasicTextField(text = name, id = R.string.name)
+
         BasicTextField(text = emailOrNumber, id = R.string.emailPhonenumber)
-        PasswordTextField(
-            password = password,
-            visibility = passwordVisibility,
-            id = R.string.password
-        )
-        PasswordTextField(
-            password = confirmPassword,
-            visibility = passwordConfirmVisibility,
-            id = R.string.confirmPassword
-        )
+        if (!showPasswordAndConfirmPasswordTextField.value) {
+            PasswordTextField(
+                password = password,
+                visibility = passwordVisibility,
+                id = R.string.password
+            )
+            PasswordTextField(
+                password = confirmPassword,
+                visibility = passwordConfirmVisibility,
+                id = R.string.confirmPassword
+            )
+        }
         Button(
             onClick = {
                 val result = viewModel.signUpAuthenticate(
@@ -132,16 +149,27 @@ fun SignUpScreen(
                 )
                 if (result == Constants.VALIDATION_PASSED) {
                     showCircularProgress.value = true
-                    viewModel.signUp(name.value, emailOrNumber.value, password.value)
-                    viewModel.result.observe(activity) {
-                        if (it == Constants.SUCCESS) {
-                            showCircularProgress.value = false
-                            navHostController.popBackStack()
-                            navHostController.navigate(Screens.AccountCreatedScreen.route)
+                    if (emailOrNumber.value.isDigitsOnly() && emailOrNumber.value.length == 10) {
+                        viewModel.phoneSignUp(name.value, emailOrNumber.value, activity)
+                        navHostController.navigate(
+                            Screens.OtpVerificationForNumberScreen.otpVerficationWIthNameAndPhoneNumber(
+                                name.value,
+                                emailOrNumber.value
+                            )
+                        )
+                    } else {
+                        viewModel.signUp(name.value, emailOrNumber.value, password.value)
+                        viewModel.result.observe(activity) {
+                            //   Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                            if (it == Constants.SUCCESS) {
+                                showCircularProgress.value = false
+                                navHostController.popBackStack()
+                                navHostController.navigate(Screens.AccountCreatedScreen.route)
 
-                        } else if (it == Constants.FAILURE) {
-                            showCircularProgress.value = false
-                            Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
+                            } else if (it == Constants.FAILURE) {
+                                showCircularProgress.value = false
+                                Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 } else {

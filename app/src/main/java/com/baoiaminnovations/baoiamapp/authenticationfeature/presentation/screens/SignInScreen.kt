@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +59,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
@@ -83,6 +85,16 @@ fun SignInScreen(
 
     var visibility = remember {
         mutableStateOf(true)
+    }
+
+    LaunchedEffect(key1 = username.value.length == 10) {
+        if (username.value.isDigitsOnly() && username.value.length == 10) {
+            navHostController.navigate(
+                Screens.OtpVerificationForNumberScreen.otpVerficationWIthNameAndPhoneNumber(
+                    "", username.value
+                )
+            )
+        }
     }
 
     val showCircularProgress = mutableStateOf(false)

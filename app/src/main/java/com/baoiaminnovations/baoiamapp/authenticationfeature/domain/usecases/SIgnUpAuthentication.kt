@@ -20,21 +20,23 @@ fun signUpAuthentication(
     if (!emailOrPhoneNumber.isDigitsOnly()) {
         if (!Patterns.EMAIL_ADDRESS.matcher(emailOrPhoneNumber.trim()).matches())
             return R.string.emailValidation
+
+        if (password.isEmpty())
+            return R.string.enterPassword
+
+        if (confirmPassword.isEmpty())
+            return R.string.enterConfirmPassword
+
+        if (password.trim() != confirmPassword.trim())
+            return R.string.passwordValidation
+
     } else {
         if (emailOrPhoneNumber.length < 10)
             return R.string.phoneNumberValidation
+
+        if (emailOrPhoneNumber.length > 10)
+            return R.string.phoneNumberValidation
     }
-
-
-
-    if (password.isEmpty())
-        return R.string.enterPassword
-
-    if (confirmPassword.isEmpty())
-        return R.string.enterConfirmPassword
-
-    if (password.trim() != confirmPassword.trim())
-        return R.string.passwordValidation
 
     return R.string.validationAccepted
 }
