@@ -13,6 +13,11 @@
         android:theme="@style/Theme.BaoiamApp"
         tools:targetApi="31">
         <activity
+            android:name=".careerFeature.PopularSearch"
+            android:exported="false"
+            android:label="@string/title_activity_popular_search"
+            android:theme="@style/Theme.BaoiamApp" />
+        <activity
             android:name=".careerFeature.PopularSearchScreen"
             android:exported="false"
             android:label="@string/title_activity_popular_search_screen"
