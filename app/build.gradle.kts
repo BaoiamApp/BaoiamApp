@@ -1,6 +1,10 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -30,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -84,6 +88,20 @@ dependencies {
     //COIL
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation("com.github.CanHub:Android-Image-Cropper:4.0.0")
+    //FIREBASE
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+
+    //FIREBASE AUTHENTICATION
+    implementation("com.google.firebase:firebase-auth")
+
+    //FIREBASE FIRESTORE
+    implementation("com.google.firebase:firebase-firestore")
+
+    // GOOGLE PLAY SERVICES
+    implementation("com.google.android.gms:play-services-auth:21.1.0")
+
+    // HILT
+    implementation("com.google.dagger:hilt-android:2.44")
+   kapt ("com.google.dagger:hilt-compiler:2.44")
 
 }

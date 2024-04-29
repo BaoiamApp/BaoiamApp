@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.profileFeature
+package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 
 import androidx.compose.foundation.BorderStroke
@@ -51,6 +51,8 @@ import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,7 +77,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.profile),
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
                     contentDescription = "",
                     modifier = Modifier
                         .clip(CircleShape)
@@ -106,7 +109,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.edit_profile),
+                Image(
+                    painter = painterResource(id = R.drawable.edit_profile),
                     contentDescription = ""
                 )
             }
@@ -128,9 +132,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.wishlist),
-                    contentDescription = ""
-                )
+                Image(painter = painterResource(id = R.drawable.wishlist), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -146,7 +148,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.chevron_right),
+                Image(
+                    painter = painterResource(id = R.drawable.chevron_right),
                     contentDescription = ""
                 )
             }
@@ -169,7 +172,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.certificate),
+                Image(
+                    painter = painterResource(id = R.drawable.certificate),
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.width(16.dp))
@@ -187,7 +191,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.chevron_right),
+                Image(
+                    painter = painterResource(id = R.drawable.chevron_right),
                     contentDescription = ""
                 )
             }
@@ -210,7 +215,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.refer_and_earn),
+                Image(
+                    painter = painterResource(id = R.drawable.refer_and_earn),
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.width(16.dp))
@@ -228,7 +234,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.chevron_right),
+                Image(
+                    painter = painterResource(id = R.drawable.chevron_right),
                     contentDescription = ""
                 )
             }
@@ -251,9 +258,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.settings),
-                    contentDescription = ""
-                )
+                Image(painter = painterResource(id = R.drawable.settings), contentDescription = "")
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = stringResource(
@@ -269,7 +274,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .align(Alignment.CenterEnd)
                     .padding(end = 15.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.chevron_right),
+                Image(
+                    painter = painterResource(id = R.drawable.chevron_right),
                     contentDescription = ""
                 )
             }
@@ -279,18 +285,16 @@ fun ProfileScreen(navHostController: NavHostController) {
         Spacer(modifier = Modifier.height(30.dp))
 
         TextButton(
-            onClick = { 
+            onClick = {
                 isdialog = true
             }, colors = ButtonDefaults.textButtonColors(
             ), modifier = Modifier.align(CenterHorizontally)
         ) {
             Text(
-                text = "Logout",
-                style = TextStyle(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                            LinearGradient,
-                            LinearGradient2
+                text = "Logout", style = TextStyle(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            LinearGradient, LinearGradient2
                         )
                     )
                 )
@@ -301,17 +305,15 @@ fun ProfileScreen(navHostController: NavHostController) {
                 modifier = Modifier.padding(start = 10.dp)
             )
         }
-        if (isdialog){
+        if (isdialog) {
             BasicAlertDialog(
                 onDismissRequest = { isdialog = false },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
-                    .background(color = Color.White,
-                        shape = RoundedCornerShape(15.dp)
-                    )
+                    .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
 
-            ) {
+                ) {
 
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -321,7 +323,8 @@ fun ProfileScreen(navHostController: NavHostController) {
                             .align(CenterHorizontally)
                             .padding(top = 30.dp),
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold)
+                        fontWeight = FontWeight.Bold
+                    )
 
                     Text(
                         text = stringResource(id = R.string.logout_text),
@@ -329,14 +332,14 @@ fun ProfileScreen(navHostController: NavHostController) {
                         modifier = Modifier
                             .align(CenterHorizontally)
                             .padding(top = 20.dp),
-                        fontSize = 16.sp)
+                        fontSize = 16.sp
+                    )
 
 
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = CenterVertically
-                        ,modifier = Modifier
+                        verticalAlignment = CenterVertically, modifier = Modifier
                             .fillMaxWidth()
                             .height(46.dp)
 
@@ -348,13 +351,17 @@ fun ProfileScreen(navHostController: NavHostController) {
                                 .fillMaxHeight()
 
                         ) {
-                            OutlinedButton(onClick = { isdialog = false },
-                                modifier = Modifier.height(75.dp).width(130.dp),
+                            OutlinedButton(
+                                onClick = { isdialog = false },
+                                modifier = Modifier
+                                    .height(75.dp)
+                                    .width(130.dp),
                                 shape = RoundedCornerShape(10.dp),
-                                border = BorderStroke(width = 2.dp,
-                                    brush = Brush.horizontalGradient(colors = listOf(
-                                        LinearGradient,
-                                        LinearGradient2
+                                border = BorderStroke(
+                                    width = 2.dp,
+                                    brush = Brush.horizontalGradient(
+                                        colors = listOf(
+                                            LinearGradient, LinearGradient2
                                         )
                                     )
                                 )
@@ -374,27 +381,28 @@ fun ProfileScreen(navHostController: NavHostController) {
                                 .fillMaxHeight()
                                 .width(130.dp)
                         ) {
-                            Button(onClick = {}, modifier = Modifier
-                                .height(60.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        colors = listOf(
-                                            LinearGradient,
-                                            LinearGradient2
-                                        )
-                                    ), shape = RoundedCornerShape(10.dp)
-                                ),
+                            Button(
+                                onClick = {
+                                    Firebase.auth.signOut()
+                                    navHostController.popBackStack()
+                                    navHostController.navigate(Screens.SignInScreen.route)
+                                    isdialog = false
+                                }, modifier = Modifier
+                                    .height(60.dp)
+                                    .background(
+                                        brush = Brush.horizontalGradient(
+                                            colors = listOf(
+                                                LinearGradient,
+                                                LinearGradient2
+                                            )
+                                        ), shape = RoundedCornerShape(10.dp)
+                                    ),
 
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Transparent
-                                )
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
 
 
                             ) {
-                                Text(text = "Yes, Logout",
-                                    fontSize = 15.sp,
-                                    color = Color.White
-                                )
+                                Text(text = "Yes, Logout", fontSize = 15.sp, color = Color.White)
                             }
                         }
                     }
@@ -408,9 +416,9 @@ fun ProfileScreen(navHostController: NavHostController) {
                     ) {
 
                         Image(
-                            painter = painterResource(id = R.drawable.check_box),
-                            contentDescription ="" ,
-                            modifier = Modifier.clickable {  }
+                            painter = painterResource(id = R.drawable.google),
+                            contentDescription = "",
+                            modifier = Modifier.clickable { }
                         )
 
                         Text(
@@ -418,14 +426,13 @@ fun ProfileScreen(navHostController: NavHostController) {
                             modifier = Modifier
                                 .padding(start = 20.dp)
                         )
-
                     }
 
                 }
 
             }
-
         }
+
 
     }
 

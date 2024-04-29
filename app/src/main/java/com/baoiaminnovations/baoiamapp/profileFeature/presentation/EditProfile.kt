@@ -1,9 +1,9 @@
-package com.baoiaminnovations.baoiamapp.profileFeature
-
+package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -39,20 +40,26 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun EditProfile(navHostController: NavHostController) {
+fun EditProfile(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
 
     var isPopupVisible by remember { mutableStateOf(false) }
-
+    //var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+    //var context = LocalContext.current
 
 
     ConstraintLayout(
@@ -63,59 +70,86 @@ fun EditProfile(navHostController: NavHostController) {
 
         val (image, fullname, phone, email, password2, button, popup) = createRefs()
 
-        val username = remember {
+        var username = remember {
             mutableStateOf("")
         }
-        val phoneNo = remember {
+        var phoneNo = remember {
             mutableStateOf("")
         }
-        val emailadd = remember {
+        var emailadd = remember {
             mutableStateOf("")
         }
-        val password = remember {
+        var password = remember {
             mutableStateOf("")
         }
-        val visibility = remember {
+        var visibility = remember {
             mutableStateOf(true)
         }
 
-        val imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
+        var imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
+        viewModel.getDataOfUser()
+        viewModel.getDataOfUser.observe(activity) {
+            username.value = it.name
+            emailadd.value = it.emailOrPhoneNumber
+            phoneNo.value = it.phoneNumber
+        }
 
-        Box(
-            modifier = Modifier.constrainAs(image) {
+        Box(modifier = Modifier.constrainAs(image) {
             top.linkTo(parent.top, margin = 30.dp)
             start.linkTo(parent.start)
             end.linkTo(parent.end)
         }) {
-
             if (imageUri.value == Uri.EMPTY) {
                 Image(
-                    painter = painterResource(id = R.drawable.group_615),
+                    painter = painterResource(id = R.drawable.profile),
                     contentDescription = "Empty profile picture",
-                    modifier = Modifier .clickable {
-                        isPopupVisible = true
-                    }   // Navigate to camera and album popup
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            isPopupVisible = true
+                        }
+                        .border(
+                            3.dp,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            shape = CircleShape
+                        )
+                        .padding(20.dp)
                 )
             } else {
-
                 AsyncImage(
                     model = imageUri.value,
                     contentDescription = "",
                     modifier = Modifier
                         .size(100.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
-                        .clickable { isPopupVisible = true }
+                        .background(Color.White),
+                    contentScale = ContentScale.Crop
                 )
-
             }
+
+            /*        Image(painter = painterResource(
+                        id = R.drawable.group_616
+                    ), contentDescription = "", modifier = Modifier
+                        .padding(top = 70.dp, start = 70.dp)
+                        .size(25.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            isPopupVisible = true
+                        }   // Navigate to camera and album popup
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    LinearGradient, LinearGradient2
+                                )
+                            )
+                        ))*/
 
         }
         // Code Snippet For Text field fullname
 
-        Column(
-            modifier = Modifier
+        Column(modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
             .constrainAs(fullname) {
@@ -137,8 +171,7 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field email
 
-        Column(
-            modifier = Modifier
+        Column(modifier = Modifier
             .fillMaxWidth()
             .constrainAs(email) {
                 top.linkTo(phone.bottom, margin = 20.dp)
@@ -158,8 +191,7 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field phone
 
-        Column(
-            modifier = Modifier
+        Column(modifier = Modifier
             .fillMaxWidth()
             .constrainAs(phone) {
                 top.linkTo(fullname.bottom, margin = 20.dp)
@@ -211,8 +243,7 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Text field password
 
-        Column(
-            modifier = Modifier
+        Column(modifier = Modifier
             .fillMaxWidth()
             .constrainAs(password2) {
                 top.linkTo(email.bottom, margin = 20.dp)
@@ -235,8 +266,7 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Button save
 
-        Column(
-            modifier = Modifier
+        Column(modifier = Modifier
             .width(160.dp)
             .height(44.dp)
             .constrainAs(button) {
@@ -246,9 +276,9 @@ fun EditProfile(navHostController: NavHostController) {
 
             }) {
 
-            Button1Preview(
-                text = stringResource(id = R.string.save),
-                onClick = { /*TODO*/ },  // Save the information's and navigate to profile screen
+            Button1Preview(text = stringResource(id = R.string.save),
+                onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
+                ,
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .fillMaxSize()
@@ -258,8 +288,7 @@ fun EditProfile(navHostController: NavHostController) {
 
         // Code Snippet For Popup Window Initialization
 
-        Box(
-            modifier = Modifier
+        Box(modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .clip(shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
@@ -269,10 +298,8 @@ fun EditProfile(navHostController: NavHostController) {
                 end.linkTo(parent.end)
             }) {
             if (isPopupVisible) {
-                ModalBottomSheet(
-                    onDismissRequest = { isPopupVisible = false }
-                ) {
-                    PopUpWindow(imageUri)
+                ModalBottomSheet(onDismissRequest = { isPopupVisible = false }) {
+                    PopUpWindow(navHostController, imageUri)
                 }
 
             }
