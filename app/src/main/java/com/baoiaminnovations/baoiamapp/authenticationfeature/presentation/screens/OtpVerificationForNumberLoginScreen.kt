@@ -85,10 +85,10 @@ fun OtpVerificationForNumberLogin(
             mutableStateOf("")
         }*/
 
-    val showDialogBox = mutableStateOf(true)
+
 
     LaunchedEffect(key1 = name == "") {
-        viewModel.phoneSignIn(phoneNumber, activity,showDialogBox)
+        viewModel.phoneSignIn(phoneNumber, activity, viewModel.showVerificationAndOTPDialogBox)
     }
 
     viewModel.resultOfPhoneSignIn.observe(activity) {
@@ -106,8 +106,8 @@ fun OtpVerificationForNumberLogin(
             .background(MaterialTheme.colorScheme.onPrimary)
             .verticalScroll(rememberScrollState()),
     ) {
-        if (showDialogBox.value) {
-            DialogBox(dismissDialog = showDialogBox)
+        if (viewModel.showVerificationAndOTPDialogBox.value) {
+            DialogBox(dismissDialog = viewModel.showVerificationAndOTPDialogBox)
         }
         Image(
             painter = painterResource(id = R.drawable.enterotp),

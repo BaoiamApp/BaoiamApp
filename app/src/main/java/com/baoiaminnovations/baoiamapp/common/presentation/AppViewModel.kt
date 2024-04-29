@@ -3,6 +3,7 @@ package com.baoiaminnovations.baoiamapp.common.presentation
 import android.app.Application
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.baoiaminnovations.baoiamapp.MainActivity
@@ -39,6 +40,8 @@ class AppViewModel @Inject constructor(
     var resultOFPhoneSignInWithCode = MutableLiveData<String>()
     var userModelForUserName = mutableStateOf<userModel?>(userModel())
     var getDataOfUser = MutableLiveData<userModel>()
+
+    val showVerificationAndOTPDialogBox = mutableStateOf(true)
 
     fun signUpAuthenticate(
         name: String,
