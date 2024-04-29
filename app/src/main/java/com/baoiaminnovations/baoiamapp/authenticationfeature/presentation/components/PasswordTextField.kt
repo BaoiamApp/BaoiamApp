@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.components
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components
 
 import android.content.res.Resources
 import androidx.compose.foundation.layout.fillMaxWidth

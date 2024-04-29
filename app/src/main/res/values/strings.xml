@@ -49,7 +49,7 @@
     <string name="enterYourEmail">Enter your email</string>
     <string name="save">save</string>
     <string name="profilePic">Profile Picture of the user</string>
-    <string name="welcome">Welcome User</string>
+    <string name="welcome">Welcome, </string>
     <string name="whatDoYouWantToLearn">What do you want to learn ?</string>
     <string name="search">Search</string>
     <string name="mic">Mic</string>
@@ -68,4 +68,14 @@
         nulla pariatur.Excepteur sint occaecat cupidatat non proident,
         sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="logout_text">You are about to logout \nAre you sure this is what \nyou want?</string>
+    <string name="enterName">Please enter name</string>
+    <string name="enterEmailOrPhoneNumber">Please enter email or phone number</string>
+    <string name="enterPhoneNumber">Please enter phone number</string>
+    <string name="enterPassword">Please enter password</string>
+    <string name="enterConfirmPassword">Please enter password to confirm</string>
+    <string name="emailValidation">This is not a valid email</string>
+    <string name="phoneNumberValidation">Please enter 10 digit number</string>
+    <string name="passwordValidation">Confirm password did not match</string>
+    <string name="validationAccepted">Correct</string>
+    <string name="enterOTP">Enter OTP</string>
 </resources>

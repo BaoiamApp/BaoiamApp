@@ -1,4 +1,4 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -31,30 +30,32 @@ import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @Composable
-fun PasswordUpdated(navHostController: NavHostController) {
+fun AccountCreated(navHostController: NavHostController) {
     Column(
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Image(
-            painter = painterResource(id = R.drawable.success_icon),
+            painter = painterResource(id = R.drawable.account_created_icon),
             contentDescription = stringResource(
-                id = R.string.passwordHasBeenUpdated
+                id = R.string.accountCreatedSuccessfully
             )
         )
         Text(
-            text = stringResource(id = R.string.updatedSuccessfully),
+            text = stringResource(id = R.string.accountCreatedSuccessfully),
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
             fontSize = 15.sp
         )
-        Text(text = stringResource(id = R.string.passwordHasBeenUpdated))
+        Text(text = stringResource(id = R.string.loginUsingUsernameAndPassword))
         Button(
-            onClick = { navHostController.navigate(Screens.SignInScreen.route) },
+            onClick = {
+                navHostController.popBackStack()
+                navHostController.navigate(Screens.SignInScreen.route)
+            },
             modifier = Modifier
                 .width(350.dp)
-                .align(Alignment.CenterHorizontally)
                 .padding(top = 30.dp),
             shape = MaterialTheme.shapes.medium.copy(all = CornerSize(10.dp)),
             colors = ButtonDefaults.buttonColors(
@@ -78,7 +79,6 @@ fun PasswordUpdated(navHostController: NavHostController) {
             ) {
                 Text(text = stringResource(id = R.string.login))
             }
-
         }
     }
 }

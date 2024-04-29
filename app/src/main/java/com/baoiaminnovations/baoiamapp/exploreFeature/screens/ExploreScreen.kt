@@ -35,12 +35,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExploreScreen(navHostController: NavHostController) {
+fun ExploreScreen(navHostController: NavHostController, viewModel: AppViewModel) {
+    viewModel.getUserName()
     var text = remember { mutableStateOf("") }
     var active = remember {
         mutableStateOf(false)
@@ -48,8 +50,12 @@ fun ExploreScreen(navHostController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {
         SearchBar(text = text, active = active)
 
+        viewModel.showVerificationAndOTPDialogBox.value = false
+        viewModel.showVerifyingOTPDialogBox.value = false
         Image(
-            modifier = Modifier.fillMaxWidth().padding(15.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp),
             painter = painterResource(id = R.drawable.offer),
             contentDescription = stringResource(id = R.string.offer),
             contentScale = ContentScale.Crop

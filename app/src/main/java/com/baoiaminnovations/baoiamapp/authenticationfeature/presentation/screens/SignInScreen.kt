@@ -1,5 +1,6 @@
-package com.baoiaminnovations.baoiamapp.authenticationfeature.screens
+package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +24,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +45,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -54,15 +59,23 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavHostController
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.BasicTextField
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignInScreen(navHostController: NavHostController) {
+fun SignInScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     var username = remember {
         mutableStateOf("")
     }
@@ -73,6 +86,20 @@ fun SignInScreen(navHostController: NavHostController) {
     var visibility = remember {
         mutableStateOf(true)
     }
+
+    LaunchedEffect(key1 = username.value.length == 10) {
+        if (username.value.isDigitsOnly() && username.value.length == 10) {
+            navHostController.navigate(
+                Screens.OtpVerificationForNumberScreen.otpVerficationWIthNameAndPhoneNumber(
+                    "", username.value
+                )
+            )
+        }
+    }
+
+    val showCircularProgress = mutableStateOf(false)
+
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -110,7 +137,27 @@ fun SignInScreen(navHostController: NavHostController) {
             Text(text = stringResource(id = R.string.forgetPassword))
         }
         Button(
-            onClick = { navHostController.navigate(Screens.ExploreScreen.route) },
+            onClick = {
+                val result = viewModel.signInAuthenticate(username.value, password.value)
+                if (result == Constants.VALIDATION_PASSED) {
+                    showCircularProgress.value = true
+                    viewModel.signIn(username.value, password.value)
+                    viewModel.resultSignIn.observe(activity) {
+                        if (it == Constants.SUCCESS) {
+                            showCircularProgress.value = false
+                            navHostController.popBackStack()
+                            navHostController.navigate(Screens.ExploreScreen.route)
+
+                        } else if (it == Constants.FAILURE) {
+                            Toast.makeText(context, "Sign In Failed", Toast.LENGTH_SHORT).show()
+                            showCircularProgress.value = false
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show()
+                }
+                //
+            },
             modifier = Modifier
                 .width(350.dp)
                 .align(Alignment.CenterHorizontally)
@@ -135,7 +182,19 @@ fun SignInScreen(navHostController: NavHostController) {
                     .height(45.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(id = R.string.login))
+                Row {
+                    Text(text = stringResource(id = R.string.login))
+                    Spacer(modifier = Modifier.width(5.dp))
+                    if (showCircularProgress.value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .width(25.dp)
+                                .height(25.dp),
+                            color = Color.White
+                        )
+                    }
+                }
+
             }
 
         }
