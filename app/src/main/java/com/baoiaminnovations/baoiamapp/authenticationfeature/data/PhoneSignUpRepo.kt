@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -25,7 +26,8 @@ class PhoneSignUpRepo {
         name: String,
         phoneNumber: String,
         activity: MainActivity,
-        returnValue: MutableLiveData<String>
+        returnValue: MutableLiveData<String>,
+        viewModel: AppViewModel
     ) {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber("+91$phoneNumber") // Phone number to verify
@@ -48,6 +50,7 @@ class PhoneSignUpRepo {
                 ) {
                     super.onCodeSent(verificationId, token)
                     storedVerificationCode = verificationId
+                    viewModel.showVerificationAndOTPDialogBox.value = false
                 }
 
             }) // OnVerificationStateChangedCallbacks
@@ -88,8 +91,8 @@ class PhoneSignUpRepo {
         try {
             val credential = PhoneAuthProvider.getCredential(storedVerificationCode, code)
             signInWithPhoneAuthCredential(credential, phoneNumber, name, returnValue)
-        }catch (exception:IllegalArgumentException){
-            Toast.makeText(application,"Wrong code",Toast.LENGTH_SHORT).show()
+        } catch (exception: IllegalArgumentException) {
+            Toast.makeText(application, "Wrong code", Toast.LENGTH_SHORT).show()
         }
 
     }

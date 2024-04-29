@@ -150,7 +150,7 @@ fun SignUpScreen(
                 if (result == Constants.VALIDATION_PASSED) {
                     showCircularProgress.value = true
                     if (emailOrNumber.value.isDigitsOnly() && emailOrNumber.value.length == 10) {
-                        viewModel.phoneSignUp(name.value, emailOrNumber.value, activity)
+                        viewModel.phoneSignUp(name.value, emailOrNumber.value, activity,viewModel)
                         navHostController.navigate(
                             Screens.OtpVerificationForNumberScreen.otpVerficationWIthNameAndPhoneNumber(
                                 name.value,

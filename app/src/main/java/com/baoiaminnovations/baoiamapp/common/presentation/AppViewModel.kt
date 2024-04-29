@@ -42,6 +42,7 @@ class AppViewModel @Inject constructor(
     var getDataOfUser = MutableLiveData<userModel>()
 
     val showVerificationAndOTPDialogBox = mutableStateOf(true)
+    val showVerifyingOTPDialogBox = mutableStateOf(false)
 
     fun signUpAuthenticate(
         name: String,
@@ -80,12 +81,13 @@ class AppViewModel @Inject constructor(
         getDataOfUser = getTheUserData.getData()
     }
 
-    fun phoneSignUp(name: String, phoneNumber: String, activity: MainActivity) {
+    fun phoneSignUp(name: String, phoneNumber: String, activity: MainActivity, viewModel: AppViewModel) {
         phoneSignUpRepo.phoneSignUp(
             name,
             phoneNumber,
             activity,
-            resultOfPhoneSignUp
+            resultOfPhoneSignUp,
+            viewModel
         )
     }
 

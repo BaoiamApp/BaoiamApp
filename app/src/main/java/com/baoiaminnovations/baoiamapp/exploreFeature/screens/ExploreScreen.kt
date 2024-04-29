@@ -50,6 +50,8 @@ fun ExploreScreen(navHostController: NavHostController, viewModel: AppViewModel)
     Column(modifier = Modifier.fillMaxSize()) {
         SearchBar(text = text, active = active)
 
+        viewModel.showVerificationAndOTPDialogBox.value = false
+        viewModel.showVerifyingOTPDialogBox.value = false
         Image(
             modifier = Modifier
                 .fillMaxWidth()

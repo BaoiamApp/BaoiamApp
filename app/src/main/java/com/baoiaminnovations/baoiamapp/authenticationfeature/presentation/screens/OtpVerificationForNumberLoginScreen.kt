@@ -107,7 +107,16 @@ fun OtpVerificationForNumberLogin(
             .verticalScroll(rememberScrollState()),
     ) {
         if (viewModel.showVerificationAndOTPDialogBox.value) {
-            DialogBox(dismissDialog = viewModel.showVerificationAndOTPDialogBox)
+            DialogBox(
+                dismissDialog = viewModel.showVerificationAndOTPDialogBox,
+                "Verifying and getting OTP"
+            )
+        }
+        if (viewModel.showVerifyingOTPDialogBox.value) {
+            DialogBox(
+                dismissDialog = viewModel.showVerifyingOTPDialogBox,
+                message = "Verifying OTP"
+            )
         }
         Image(
             painter = painterResource(id = R.drawable.enterotp),
@@ -158,12 +167,14 @@ fun OtpVerificationForNumberLogin(
         }
         Button(
             onClick = {
+                viewModel.showVerifyingOTPDialogBox.value = true
                 val code =
                     otp.value
                 if (name.isNotEmpty()) {
                     viewModel.phoneSignUpWithCode(code, name, phoneNumber)
                     viewModel.resultOFPhoneSignUpWithCode.observe(activity) {
                         if (it == Constants.SUCCESS) {
+                            viewModel.showVerificationAndOTPDialogBox.value = false
                             navHostController.popBackStack()
                             navHostController.navigate(Screens.ExploreScreen.route)
                         } else if (it == Constants.FAILURE) {
@@ -216,21 +227,21 @@ fun OtpVerificationForNumberLogin(
 
         }
         Spacer(modifier = Modifier.heightIn(20.dp))
-        TextButton(
-            onClick = { navHostController.navigate(Screens.CreateNewPasswordScreen.route) },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = stringResource(id = R.string.resend), style = TextStyle(
-                    brush = Brush.horizontalGradient(
-                        listOf(
-                            Color(0xFFFF7B00),
-                            Color(0xFFFF0400)
-                        )
-                    )
-                )
-            )
-        }
+        /*       TextButton(
+                   onClick = { navHostController.navigate(Screens.CreateNewPasswordScreen.route) },
+                   modifier = Modifier.align(Alignment.CenterHorizontally)
+               ) {
+                   Text(
+                       text = stringResource(id = R.string.resend), style = TextStyle(
+                           brush = Brush.horizontalGradient(
+                               listOf(
+                                   Color(0xFFFF7B00),
+                                   Color(0xFFFF0400)
+                               )
+                           )
+                       )
+                   )
+               }*/
     }
     viewModel.resultOfPhoneSignUp.observe(activity) {
         if (it == Constants.SUCCESS) {
@@ -243,7 +254,7 @@ fun OtpVerificationForNumberLogin(
 }
 
 @Composable
-fun DialogBox(dismissDialog: MutableState<Boolean>) {
+fun DialogBox(dismissDialog: MutableState<Boolean>, message: String) {
     AlertDialog(onDismissRequest = { dismissDialog.value = false }, confirmButton = {
 
     }, title = {
@@ -254,7 +265,7 @@ fun DialogBox(dismissDialog: MutableState<Boolean>) {
                     .height(30.dp)
             )
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = "Verifying and getting OTP")
+            Text(text = message)
         }
     })
 }

@@ -53,6 +53,7 @@ class PhoneSIgnInRepo {
                     super.onCodeSent(verificationId, token)
                     showDialogBox.value = false
                     storedVerificationCode = verificationId
+                    Toast.makeText(activity,"Receiving OTP",Toast.LENGTH_SHORT).show()
                 }
 
             }) // OnVerificationStateChangedCallbacks
