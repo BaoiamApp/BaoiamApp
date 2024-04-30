@@ -12,7 +12,15 @@ import com.baoiaminnovations.baoiamapp.myCourseFeature.MyCourse
 
 import com.baoiaminnovations.baoiamapp.profileFeature.presentation.EditProfile
 import com.baoiaminnovations.baoiamapp.profileFeature.presentation.ProfileScreen
+import com.baoiaminnovations.baoiamapp.settingsfeature.AboutUs
+import com.baoiaminnovations.baoiamapp.settingsfeature.AppLanguage
+import com.baoiaminnovations.baoiamapp.settingsfeature.ChatBot
+import com.baoiaminnovations.baoiamapp.settingsfeature.ContactUs
+import com.baoiaminnovations.baoiamapp.settingsfeature.GeneralSetting
+import com.baoiaminnovations.baoiamapp.settingsfeature.HelpAndSupport
+import com.baoiaminnovations.baoiamapp.settingsfeature.NotificatiinSetting
 import com.baoiaminnovations.baoiamapp.settingsfeature.SettingsScreen
+import com.baoiaminnovations.baoiamapp.settingsfeature.Transactions
 
 fun NavGraphBuilder.mainScreenGraph(
     navHostController: NavHostController,
@@ -43,7 +51,31 @@ fun NavGraphBuilder.mainScreenGraph(
             CapturedImage()
         }*/
         composable(Screens.SettingsScreen.route) {
-            SettingsScreen()
+            SettingsScreen(navHostController)
+        }
+        composable(Screens.GeneralSetting.route) {
+            GeneralSetting(navHostController)
+        }
+        composable(Screens.NotificationSetting.route) {
+            NotificatiinSetting()
+        }
+        composable(Screens.AppLanguage.route) {
+            AppLanguage()
+        }
+        composable(Screens.Transactions.route) {
+            Transactions()
+        }
+        composable(Screens.HelpAndSupport.route) {
+            HelpAndSupport(navHostController)
+        }
+        composable(Screens.ChatBot.route) {
+            ChatBot()
+        }
+        composable(Screens.ContactUs.route) {
+            ContactUs()
+        }
+        composable(Screens.AboutUs.route) {
+            AboutUs()
         }
     }
 }

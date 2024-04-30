@@ -86,6 +86,9 @@ fun SignUpScreen(
 
     val showPasswordAndConfirmPasswordTextField = remember { mutableStateOf(false) }
 
+    //viewModel.showVerifyingOTPDialogBox.value = true
+    viewModel.showVerificationAndOTPDialogBox.value = true
+
     LaunchedEffect(key1 = emailOrNumber.value.length == 10) {
         if (emailOrNumber.value.isDigitsOnly() && emailOrNumber.value.length == 10) {
             showPasswordAndConfirmPasswordTextField.value = true

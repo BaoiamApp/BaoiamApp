@@ -98,6 +98,12 @@ fun SignInScreen(
     }
 
     val showCircularProgress = mutableStateOf(false)
+  /*  LaunchedEffect(key1 = true) {
+        viewModel.showVerifyingOTPDialogBox.value = true
+
+    }*/
+    viewModel.showVerificationAndOTPDialogBox.value = true
+
 
     val context = LocalContext.current
     Column(
