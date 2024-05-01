@@ -22,6 +22,7 @@ import com.baoiaminnovations.baoiamapp.settingsfeature.ContactUs
 import com.baoiaminnovations.baoiamapp.settingsfeature.GeneralSetting
 import com.baoiaminnovations.baoiamapp.settingsfeature.HelpAndSupport
 import com.baoiaminnovations.baoiamapp.settingsfeature.NotificatiinSetting
+import com.baoiaminnovations.baoiamapp.settingsfeature.PaymentOptions
 import com.baoiaminnovations.baoiamapp.settingsfeature.SettingsScreen
 import com.baoiaminnovations.baoiamapp.settingsfeature.Transactions
 
@@ -56,6 +57,9 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
         }
         composable(Screens.Transactions.route) {
             Transactions()
+        }
+        composable(Screens.PaymentOptions.route) {
+            PaymentOptions()
         }
         composable(Screens.HelpAndSupport.route) {
             HelpAndSupport(navHostController)

@@ -5,15 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,14 +77,15 @@ fun AboutUs() {
 
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(330.dp)
                     .height(130.dp)
                     .padding(top = 20.dp)
             ) {
 
                  Surface(color = Color.White,
                      modifier = Modifier
-                         .size(90.dp)
+                         .width(80.dp)
+                         .height(90.dp)
                          .padding(start = 10.dp)
                          .background(Color.White)
                          .border(
@@ -109,14 +107,15 @@ fun AboutUs() {
                             text = "Active \nLearners",
                             textAlign = TextAlign.Center,
                             color= Color.Gray,
-                            fontSize = 15.sp,
+                            fontSize = 13.sp,
                             modifier = Modifier
                                 .padding(top = 40.dp)
                         )
                  }
                 Surface(color = Color.White,
                     modifier = Modifier
-                        .size(90.dp)
+                        .width(80.dp)
+                        .height(90.dp)
                         .padding(start = 10.dp)
                         .background(Color.White)
                         .border(
@@ -138,7 +137,7 @@ fun AboutUs() {
                         text = "Minutes \nWatched",
                         textAlign = TextAlign.Center,
                         color= Color.Gray,
-                        fontSize = 15.sp,
+                        fontSize = 13.sp,
                         modifier = Modifier
                             .padding(top = 40.dp)
                     )
@@ -146,7 +145,8 @@ fun AboutUs() {
 
                 Surface(color = Color.White,
                     modifier = Modifier
-                        .size(90.dp)
+                        .width(80.dp)
+                        .height(90.dp)
                         .padding(start = 10.dp)
                         .background(Color.White)
                         .border(
@@ -168,14 +168,15 @@ fun AboutUs() {
                         text = "Top \nEducators",
                         textAlign = TextAlign.Center,
                         color= Color.Gray,
-                        fontSize = 15.sp,
+                        fontSize = 13.sp,
                         modifier = Modifier
                             .padding(top = 40.dp)
                     )
                 }
                 Surface(color = Color.White,
                     modifier = Modifier
-                        .size(90.dp)
+                        .width(80.dp)
+                        .height(90.dp)
                         .padding(start = 10.dp)
                         .border(
                             width = 1.dp, color = LinearGradient,
@@ -196,7 +197,7 @@ fun AboutUs() {
                         text = "Daily Live \nClasses",
                         textAlign = TextAlign.Center,
                         color= Color.Gray,
-                        fontSize = 15.sp,
+                        fontSize = 13.sp,
                         modifier = Modifier
                             .padding(top = 40.dp)
                     )
