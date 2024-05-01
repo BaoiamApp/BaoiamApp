@@ -51,6 +51,7 @@ class PhoneSignUpRepo {
                     super.onCodeSent(verificationId, token)
                     storedVerificationCode = verificationId
                     viewModel.showVerificationAndOTPDialogBox.value = false
+                    Toast.makeText(activity, "Receiving OTP", Toast.LENGTH_SHORT).show()
                 }
 
             }) // OnVerificationStateChangedCallbacks
@@ -70,7 +71,7 @@ class PhoneSignUpRepo {
                     // Sign in success, update UI with the signed-in user's information
                     returnValue.value = Constants.SUCCESS
                     val user = task.result?.user?.uid ?: ""
-                    val userModel = userModel(name = name, phoneNumber = phoneNumber)
+                    val userModel = userModel(name = name, phoneNumber = phoneNumber, userId = user)
                     firestore.collection("users").document(user).set(userModel, SetOptions.merge())
                 } else {
                     returnValue.value = Constants.FAILURE

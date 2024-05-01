@@ -1,6 +1,7 @@
 package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,9 +44,13 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.BasicTextField
 import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.PasswordTextField
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
+import com.baoiaminnovations.baoiamapp.common.presentation.Screens
+import com.baoiaminnovations.baoiamapp.common.presentation.components.ProgressDialogBox
 import com.baoiaminnovations.baoiamapp.ui.theme.Button1Preview
 
 
@@ -85,6 +91,33 @@ fun EditProfile(
         var visibility = remember {
             mutableStateOf(true)
         }
+        val dpUrl = remember {
+            mutableStateOf("")
+        }
+        val showCircularProgressBar = remember { mutableStateOf(false) }
+
+        if (showCircularProgressBar.value)
+            ProgressDialogBox(message = mutableStateOf(stringResource(id = R.string.updatingProfile)))
+
+        val result = viewModel.resultOfUpdatingUserData.observeAsState().value
+        if (result == Constants.SUCCESS) {
+            viewModel.getUserName()
+            showCircularProgressBar.value = false
+            Toast.makeText(
+                activity,
+                "Profile successfully updated",
+                Toast.LENGTH_SHORT
+            ).show()
+            navHostController.popBackStack()
+            navHostController.navigate(Screens.ProfileScreen.route)
+        } else if (result == Constants.FAILURE) {
+            Toast.makeText(
+                activity,
+                "Failed to update. Please try again",
+                Toast.LENGTH_SHORT
+            ).show()
+            showCircularProgressBar.value = false
+        }
 
         var imageUri = remember { mutableStateOf<Uri>(Uri.EMPTY) }
         // Code Snippet For profile image
@@ -93,7 +126,9 @@ fun EditProfile(
             username.value = it.name
             emailadd.value = it.emailOrPhoneNumber
             phoneNo.value = it.phoneNumber
+            dpUrl.value = it.imageUrl
         }
+
 
         Box(modifier = Modifier.constrainAs(image) {
             top.linkTo(parent.top, margin = 30.dp)
@@ -101,12 +136,13 @@ fun EditProfile(
             end.linkTo(parent.end)
         }) {
             if (imageUri.value == Uri.EMPTY) {
-                Image(
-                    painter = painterResource(id = R.drawable.profile),
+                AsyncImage(
+                    model = dpUrl.value,
                     contentDescription = "Empty profile picture",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .clip(CircleShape)
+                        .size(100.dp)
                         .clickable {
                             isPopupVisible = true
                         }
@@ -115,7 +151,6 @@ fun EditProfile(
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
                             shape = CircleShape
                         )
-                        .padding(20.dp)
                 )
             } else {
                 AsyncImage(
@@ -276,8 +311,17 @@ fun EditProfile(
 
             }) {
 
-            Button1Preview(text = stringResource(id = R.string.save),
-                onClick = { /*TODO*/ }  // Save the information's and navigate to profile screen
+            Button1Preview(
+                text = stringResource(id = R.string.save),
+                onClick = {
+                    showCircularProgressBar.value = true
+                    var userModel = userModel(
+                        name = username.value,
+                        phoneNumber = phoneNo.value,
+                        emailOrPhoneNumber = emailadd.value
+                    )
+                    viewModel.updateTheUserData(userModel)
+                }  // Save the information's and navigate to profile screen
                 ,
                 modifier = Modifier
                     .align(CenterHorizontally)
@@ -299,15 +343,11 @@ fun EditProfile(
             }) {
             if (isPopupVisible) {
                 ModalBottomSheet(onDismissRequest = { isPopupVisible = false }) {
-                    PopUpWindow(navHostController, imageUri)
+                    PopUpWindow(navHostController, imageUri, viewModel, activity)
                 }
-
             }
-
         }
-
     }
-
 }
 
 

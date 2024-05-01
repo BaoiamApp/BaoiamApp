@@ -78,4 +78,5 @@
     <string name="passwordValidation">Confirm password did not match</string>
     <string name="validationAccepted">Correct</string>
     <string name="enterOTP">Enter OTP</string>
+    <string name="updatingProfile">Updating Profile</string>
 </resources>

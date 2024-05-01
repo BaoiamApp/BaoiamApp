@@ -38,7 +38,7 @@ fun NavGraphBuilder.mainScreenGraph(
             CareerScreen()
         }
         composable(Screens.ProfileScreen.route) {
-            ProfileScreen(navHostController)
+            ProfileScreen(navHostController,viewModel,activity)
         }
         composable(Screens.EditProfile.route) {
             EditProfile(navHostController, viewModel, activity)

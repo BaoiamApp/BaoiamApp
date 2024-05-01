@@ -1,9 +1,9 @@
 package com.baoiaminnovations.baoiamapp.common.presentation
 
 import android.app.Application
+import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.baoiaminnovations.baoiamapp.MainActivity
@@ -14,12 +14,14 @@ import com.baoiaminnovations.baoiamapp.authenticationfeature.data.SignUpRepo
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.models.userModel
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signInAuthentication
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.usecases.signUpAuthentication
-import com.baoiaminnovations.baoiamapp.profileFeature.data.GetTheUserData
+import com.baoiaminnovations.baoiamapp.profileFeature.data.GetTheUserDataRepo
+import com.baoiaminnovations.baoiamapp.profileFeature.data.UpdateTheUserDataRepo
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.security.PrivateKey
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,9 +29,10 @@ class AppViewModel @Inject constructor(
     private val application: Application,
     private val signUpRepo: SignUpRepo,
     private val signInRepo: SignInRepo,
-    private val getTheUserData: GetTheUserData,
+    private val getTheUserDataRepo: GetTheUserDataRepo,
     private val phoneSignUpRepo: PhoneSignUpRepo,
-    private val phoneSIgnInRepo: PhoneSIgnInRepo
+    private val phoneSIgnInRepo: PhoneSIgnInRepo,
+    private val updateTheUserDataRepo: UpdateTheUserDataRepo
 ) : AndroidViewModel(application) {
 
     var result = MutableLiveData<String>()
@@ -38,6 +41,8 @@ class AppViewModel @Inject constructor(
     var resultOFPhoneSignUpWithCode = MutableLiveData<String>()
     var resultOfPhoneSignIn = MutableLiveData<String>()
     var resultOFPhoneSignInWithCode = MutableLiveData<String>()
+    var resultOfUpdatingUserData = MutableLiveData<String>("")
+    var resultOfIUploadingProfilePicture = MutableLiveData<String>()
     var userModelForUserName = mutableStateOf<userModel?>(userModel())
     var getDataOfUser = MutableLiveData<userModel>()
 
@@ -78,10 +83,15 @@ class AppViewModel @Inject constructor(
     }
 
     fun getDataOfUser() {
-        getDataOfUser = getTheUserData.getData()
+        getDataOfUser = getTheUserDataRepo.getData()
     }
 
-    fun phoneSignUp(name: String, phoneNumber: String, activity: MainActivity, viewModel: AppViewModel) {
+    fun phoneSignUp(
+        name: String,
+        phoneNumber: String,
+        activity: MainActivity,
+        viewModel: AppViewModel
+    ) {
         phoneSignUpRepo.phoneSignUp(
             name,
             phoneNumber,
@@ -101,7 +111,11 @@ class AppViewModel @Inject constructor(
         )
     }
 
-    fun phoneSignIn(phoneNumber: String, activity: MainActivity,showDialogBox:MutableState<Boolean>) {
+    fun phoneSignIn(
+        phoneNumber: String,
+        activity: MainActivity,
+        showDialogBox: MutableState<Boolean>
+    ) {
         phoneSIgnInRepo.phoneSignIn(
             phoneNumber,
             activity,
@@ -116,5 +130,14 @@ class AppViewModel @Inject constructor(
             returnValue = resultOFPhoneSignInWithCode,
             application = application
         )
+    }
+
+    fun updateTheUserData(userModel: userModel) {
+        resultOfUpdatingUserData = updateTheUserDataRepo.updateTheUserData(userModel)
+    }
+
+    fun uploadingProfilePicture(uri: Uri, extension: String, activity: MainActivity) {
+        resultOfIUploadingProfilePicture =
+            updateTheUserDataRepo.uploadTheProfilePicture(uri, extension, activity)
     }
 }

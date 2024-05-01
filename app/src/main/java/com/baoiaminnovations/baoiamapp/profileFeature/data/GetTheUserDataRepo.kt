@@ -7,7 +7,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 
-class GetTheUserData {
+class GetTheUserDataRepo {
     fun getData(): MutableLiveData<userModel> {
         val getData = MutableLiveData<userModel>()
         val firestore = Firebase.firestore

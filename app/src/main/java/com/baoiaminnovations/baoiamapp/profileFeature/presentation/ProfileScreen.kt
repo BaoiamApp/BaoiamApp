@@ -1,6 +1,7 @@
 package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -47,7 +50,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
@@ -57,9 +63,20 @@ import com.google.firebase.auth.auth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navHostController: NavHostController) {
+fun ProfileScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
 
     var isdialog by remember { mutableStateOf(false) }
+
+    var userEmailAddress = remember { mutableStateOf<String>("") }
+    var userName = remember { mutableStateOf("") }
+    var dpUrl = remember { mutableStateOf("") }
+
+    viewModel.getDataOfUser()
+    viewModel.resultOfUpdatingUserData.value = ""
 
     Column(
         modifier = Modifier
@@ -67,6 +84,11 @@ fun ProfileScreen(navHostController: NavHostController) {
             .fillMaxSize()
     ) {
 
+        viewModel.getDataOfUser.observe(activity) {
+            userName.value = it.name
+            userEmailAddress.value = it.emailOrPhoneNumber
+            dpUrl.value = it.imageUrl
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,17 +99,19 @@ fun ProfileScreen(navHostController: NavHostController) {
                 verticalAlignment = CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.profile),
+                AsyncImage(
+                    model = dpUrl.value,
+                    placeholder = painterResource(id = R.drawable.profile),
                     contentDescription = "",
                     modifier = Modifier
-                        .clip(CircleShape)
-                        .padding(15.dp)
+                        .size(50.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(5.dp))
                 Column() {
                     Text(
-                        text = stringResource(id = R.string.name),
+                        text = if (userName.value == "") stringResource(id = R.string.name) else userName.value,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = 20.dp, top = 15.dp),
                         fontSize = 18.sp,
@@ -95,7 +119,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                     )
 
                     Text(
-                        text = "user email address",
+                        text = if (userEmailAddress.value == "") stringResource(id = R.string.emailAddress) else userEmailAddress.value,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(start = 20.dp, top = 5.dp),
                         fontSize = 15.sp,
@@ -111,7 +135,8 @@ fun ProfileScreen(navHostController: NavHostController) {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.edit_profile),
-                    contentDescription = ""
+                    contentDescription = "",
+                    modifier = Modifier
                 )
             }
 

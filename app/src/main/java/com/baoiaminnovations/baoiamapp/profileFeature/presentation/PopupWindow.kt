@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,7 +37,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
+import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,7 +48,12 @@ import java.util.Objects
 
 
 @Composable
-fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>) {
+fun PopUpWindow(
+    navHostController: NavHostController,
+    imageUri: MutableState<Uri>,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
 
     var context = LocalContext.current
 
@@ -54,19 +63,38 @@ fun PopUpWindow(navHostController: NavHostController,imageUri:MutableState<Uri>)
         context.applicationContext.packageName + ".provider", file
     )
 
-  //  var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
+    //  var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val camlauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) {
         imageUri.value = uri
+        val extension =
+            MimeTypeMap.getSingleton()
+                .getExtensionFromMimeType(activity.contentResolver.getType(uri))
+                .toString()
+        viewModel.uploadingProfilePicture(uri, extension, activity)
     }
 
 
     val photolauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             imageUri.value = uri!!
+            val extension =
+                MimeTypeMap.getSingleton()
+                    .getExtensionFromMimeType(activity.contentResolver.getType(uri))
+                    .toString()
+            viewModel.uploadingProfilePicture(uri, extension, activity)
+            viewModel.resultOfIUploadingProfilePicture.observe(activity) {
+                if (it == Constants.SUCCESS) {
+                    Toast.makeText(activity, "Picture uploaded successfully", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (it == Constants.FAILURE) {
+                    Toast.makeText(activity, "Failed to upload the picture", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     /*  imageUri?.let {
           if (Build.VERSION.SDK_INT < 28) {
