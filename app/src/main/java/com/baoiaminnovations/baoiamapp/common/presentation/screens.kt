@@ -35,6 +35,7 @@ sealed class Screens(val route: String) {
     object NotificationSetting : Screens("notification_settings")
     object AppLanguage : Screens("app_language")
     object Transactions : Screens("transactions")
+    object PaymentOptions : Screens("payment_options")
     object HelpAndSupport : Screens("help_and_support")
     object ChatBot : Screens("chat_bot")
     object ContactUs : Screens("contact_us")

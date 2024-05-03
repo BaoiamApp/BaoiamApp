@@ -45,6 +45,9 @@
     <string name="enterYourFullName">Enter your full name</string>
     <string name="enterYourPhoneNumber">Enter your phone number</string>
     <string name="emailAddress">Enter your email</string>
+    <string name="write_your_msg">Write your message</string>
+    <string name="chat_msg_1">I want to change my course which I purchased.</string>
+    <string name="chat_msg_2">Sorry, Alex I don\'t have any information on this. Would you like to connect with our team?</string>
     <string name="enterYourPhoneNo">+91|    Enter your phone number</string>
     <string name="enterYourEmail">Enter your email</string>
     <string name="save">save</string>
