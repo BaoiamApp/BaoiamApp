@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -41,6 +42,7 @@ import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
+import com.baoiaminnovations.baoiamapp.common.presentation.components.ProgressDialogBox
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -63,18 +65,21 @@ fun PopUpWindow(
         context.applicationContext.packageName + ".provider", file
     )
 
+    val showProgressBar = remember { mutableStateOf(false) }
+
     //  var imageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
 
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val camlauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) {
+        showProgressBar.value = true
         imageUri.value = uri
         val extension =
             MimeTypeMap.getSingleton()
                 .getExtensionFromMimeType(activity.contentResolver.getType(uri))
                 .toString()
-        viewModel.uploadingProfilePicture(uri, extension, activity)
+        viewModel.uploadingProfilePicture(uri, extension, activity,showProgressBar)
     }
 
 
@@ -85,7 +90,7 @@ fun PopUpWindow(
                 MimeTypeMap.getSingleton()
                     .getExtensionFromMimeType(activity.contentResolver.getType(uri))
                     .toString()
-            viewModel.uploadingProfilePicture(uri, extension, activity)
+            viewModel.uploadingProfilePicture(uri, extension, activity,showProgressBar)
             viewModel.resultOfIUploadingProfilePicture.observe(activity) {
                 if (it == Constants.SUCCESS) {
                     Toast.makeText(activity, "Picture uploaded successfully", Toast.LENGTH_SHORT)
@@ -132,7 +137,9 @@ fun PopUpWindow(
 
 
         // Code Snippet For Text "profile photo"
-
+        if (showProgressBar.value) {
+            ProgressDialogBox(message = mutableStateOf(stringResource(id = R.string.updatingProfilePicture)))
+        }
         Text(
             text = "Profile Photo",
             modifier = Modifier

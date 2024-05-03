@@ -136,8 +136,8 @@ class AppViewModel @Inject constructor(
         resultOfUpdatingUserData = updateTheUserDataRepo.updateTheUserData(userModel)
     }
 
-    fun uploadingProfilePicture(uri: Uri, extension: String, activity: MainActivity) {
+    fun uploadingProfilePicture(uri: Uri, extension: String, activity: MainActivity,showProgressbar:MutableState<Boolean>) {
         resultOfIUploadingProfilePicture =
-            updateTheUserDataRepo.uploadTheProfilePicture(uri, extension, activity)
+            updateTheUserDataRepo.uploadTheProfilePicture(uri, extension, activity,showProgressbar)
     }
 }

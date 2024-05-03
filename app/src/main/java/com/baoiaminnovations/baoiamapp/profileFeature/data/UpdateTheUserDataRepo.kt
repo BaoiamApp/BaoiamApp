@@ -36,7 +36,8 @@ class UpdateTheUserDataRepo {
     fun uploadTheProfilePicture(
         uri: Uri,
         extension: String,
-        activity: MainActivity
+        activity: MainActivity,
+        showProgressBar: MutableState<Boolean>
     ): MutableLiveData<String> {
         val path = firebaseStorage.reference.child("IMAGE-${FirebaseUserId.currentUser}.$extension")
         path.putFile(uri).addOnSuccessListener {
@@ -45,7 +46,11 @@ class UpdateTheUserDataRepo {
                 resultOfUploadingProfile.value = Constants.SUCCESS
                 path.downloadUrl.addOnSuccessListener { picture ->
                     fireStore.collection("users").document(FirebaseUserId.currentUser)
-                        .update("imageUrl", picture)
+                        .update("imageUrl", picture).addOnSuccessListener {
+                            showProgressBar.value = false
+                        }.addOnFailureListener{
+                            showProgressBar.value = false
+                        }
                 }
             } else {
                 resultOfUploadingProfile.value = Constants.FAILURE
