@@ -13,7 +13,7 @@ fun NavHost(
 ) {
     androidx.navigation.compose.NavHost(
         navController = navHostController,
-        startDestination = mainScreenGraph
+        startDestination = authenticationGraph
     ) {
         onboardingGraph(navHostController)
         authenticationGraph(navHostController, viewModel, activity)

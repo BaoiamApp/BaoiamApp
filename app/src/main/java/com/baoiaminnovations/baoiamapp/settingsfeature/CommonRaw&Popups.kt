@@ -52,7 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.baoiaminnovations.baoiamapp.R
-import com.baoiaminnovations.baoiamapp.authenticationfeature.components.OtpTextFields
+import com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.components.OtpTextFields
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient2
 import com.baoiaminnovations.baoiamapp.ui.theme.softOrange
