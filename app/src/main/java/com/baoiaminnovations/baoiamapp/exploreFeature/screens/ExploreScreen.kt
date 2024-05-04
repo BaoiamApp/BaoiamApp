@@ -1,5 +1,6 @@
 package com.baoiaminnovations.baoiamapp.exploreFeature.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -34,19 +35,35 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExploreScreen(navHostController: NavHostController, viewModel: AppViewModel) {
+fun ExploreScreen(
+    navHostController: NavHostController,
+    viewModel: AppViewModel,
+    activity: MainActivity
+) {
     viewModel.getUserName()
     var text = remember { mutableStateOf("") }
     var active = remember {
         mutableStateOf(false)
     }
+
+    val sharedPreferences = activity.getSharedPreferences(
+        Constants.SHARED_PREF_NAME,
+        Context.MODE_PRIVATE
+    )
+    val editor = sharedPreferences.edit()
+    editor.apply {
+        putString(Constants.PREF_KEY, Constants.MAIN_SCREEN_VALUE)
+    }.apply()
+
     Column(modifier = Modifier.fillMaxSize()) {
         SearchBar(text = text, active = active)
 

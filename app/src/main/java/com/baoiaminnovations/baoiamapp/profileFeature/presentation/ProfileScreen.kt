@@ -1,6 +1,7 @@
 package com.baoiaminnovations.baoiamapp.profileFeature.presentation
 
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -54,6 +55,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.baoiaminnovations.baoiamapp.MainActivity
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.authenticationfeature.domain.util.Constants
 import com.baoiaminnovations.baoiamapp.common.presentation.AppViewModel
 import com.baoiaminnovations.baoiamapp.common.presentation.Screens
 import com.baoiaminnovations.baoiamapp.ui.theme.LinearGradient
@@ -413,6 +415,14 @@ fun ProfileScreen(
                         ) {
                             Button(
                                 onClick = {
+                                    val sharedPreferences = activity.getSharedPreferences(
+                                        Constants.SHARED_PREF_NAME,
+                                        Context.MODE_PRIVATE
+                                    )
+                                    val editor = sharedPreferences.edit()
+                                    editor.apply {
+                                        putString(Constants.PREF_KEY, Constants.AUTH_SCREEN_VALUE)
+                                    }.apply()
                                     Firebase.auth.signOut()
                                     navHostController.popBackStack()
                                     navHostController.navigate(Screens.SignInScreen.route)

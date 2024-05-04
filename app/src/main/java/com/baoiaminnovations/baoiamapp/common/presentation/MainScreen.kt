@@ -54,7 +54,8 @@ import com.google.firebase.firestore.toObject
 fun MainScreen(
     navHostController: NavHostController,
     viewModel: AppViewModel,
-    activity: MainActivity
+    activity: MainActivity,
+    result: String
 ) {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -142,7 +143,7 @@ fun MainScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onPrimary)
         ) {
-            NavHost(navHostController = navHostController, viewModel, activity)
+            NavHost(navHostController = navHostController, viewModel, activity,result)
         }
     }
 }

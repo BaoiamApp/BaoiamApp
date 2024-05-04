@@ -30,7 +30,7 @@ fun NavGraphBuilder.mainScreenGraph(
 ) {
     navigation(startDestination = Screens.ExploreScreen.route, route = mainScreenGraph) {
         composable(Screens.ExploreScreen.route) {
-            ExploreScreen(navHostController, viewModel)
+            ExploreScreen(navHostController, viewModel,activity)
         }
         composable(Screens.MyCourseScreen.route) {
             MyCourse()

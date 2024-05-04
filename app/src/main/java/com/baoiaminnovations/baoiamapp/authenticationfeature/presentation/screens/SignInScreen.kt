@@ -1,5 +1,6 @@
 package com.baoiaminnovations.baoiamapp.authenticationfeature.presentation.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -97,11 +98,21 @@ fun SignInScreen(
         }
     }
 
-    val showCircularProgress = mutableStateOf(false)
-  /*  LaunchedEffect(key1 = true) {
-        viewModel.showVerifyingOTPDialogBox.value = true
+    val sharedPreferences = activity.getSharedPreferences(
+        Constants.SHARED_PREF_NAME,
+        Context.MODE_PRIVATE
+    )
+    val editor = sharedPreferences.edit()
+    editor.apply {
+        putString(Constants.PREF_KEY, Constants.AUTH_SCREEN_VALUE)
+    }.apply()
 
-    }*/
+
+    val showCircularProgress = mutableStateOf(false)
+    /*  LaunchedEffect(key1 = true) {
+          viewModel.showVerifyingOTPDialogBox.value = true
+
+      }*/
     viewModel.showVerificationAndOTPDialogBox.value = true
 
 
