@@ -1,5 +1,8 @@
 package com.baoiaminnovations.baoiamapp.careerFeature
 
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -9,11 +12,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,22 +28,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.baoiaminnovations.baoiamapp.R
+import com.baoiaminnovations.baoiamapp.careerFeature.ui.theme.BaoiamAppTheme
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CareerScreen() {
+fun InternshipListBaoiamScreen() {
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
@@ -49,36 +59,9 @@ fun CareerScreen() {
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             Text(
-                text = "Internship",
+                text = "Baoiam Internships",
                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp),
-                modifier = Modifier.weight(1f)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "View More",
-                modifier = Modifier.clickable { /* Handle click */ }
-            )
-        }
 
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp),
-            painter = painterResource(id = R.drawable.offer),
-            contentDescription = stringResource(id = R.string.offer),
-            contentScale = ContentScale.Crop
-        )
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            Text(
-                text = "Internship",
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp),
-                modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.weight(1f))
             Switch(
@@ -86,7 +69,6 @@ fun CareerScreen() {
                 onCheckedChange = { active.value = it },
                 modifier = Modifier.padding(start = 8.dp)
             )
-
         }
         LazyVerticalGrid(columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(
@@ -114,26 +96,4 @@ fun CareerScreen() {
                 }
             })
     }
-}
-
-@Composable
-fun ImageClickable(
-    modifier: Modifier = Modifier,
-    painter: Painter,
-    contentDescription: String?,
-    onClick: () -> Unit
-) {
-    Image(
-        modifier = modifier
-            .clickable(onClick = onClick),
-        painter = painter,
-        contentDescription = contentDescription
-    )
-}
-
-@Preview
-@Composable
-fun CareerScreenPreview() {
-    val navController = rememberNavController()
-    //CareerScreen(navController = navController)
 }

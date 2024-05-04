@@ -13,6 +13,19 @@
         android:theme="@style/Theme.BaoiamApp"
         tools:targetApi="31">
         <activity
+            android:name=".careerFeature.AllInternshipListScreen"
+            android:exported="false"
+            android:label="@string/title_activity_all_internship_list_screen"
+            android:theme="@style/Theme.BaoiamApp" />
+        <activity
+            android:name=".careerFeature.InternshipListBaoiamScreen"
+            android:exported="false"
+            android:label="@string/title_activity_internship_list_baoiam_screen"
+            android:theme="@style/Theme.BaoiamApp" />
+        <activity
+            android:name=".careerFeature.ui.theme.IntershipListScreen"
+            android:exported="false" />
+        <activity
             android:name=".careerFeature.PopularSearch"
             android:exported="false"
             android:label="@string/title_activity_popular_search"
