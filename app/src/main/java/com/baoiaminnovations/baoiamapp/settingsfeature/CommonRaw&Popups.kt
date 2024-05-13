@@ -272,23 +272,6 @@ fun SuccessfullyPopup(GoBack:() -> Unit) {
 @Composable
 fun OTPPopup(cancel:() -> Unit, confirm: ()-> Unit,resend: ()-> Unit) {
 
-    Row(horizontalArrangement = Arrangement.End,
-        modifier = Modifier
-            .background(
-                Color.White,
-                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
-            )
-            .fillMaxWidth()
-            .height(40.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.x_square),
-            contentDescription = "",
-            modifier = Modifier
-                .padding(top = 15.dp, end = 15.dp)
-                .clickable {cancel() }
-        )
-    }
 
     var otp1 = remember {
         mutableStateOf("")
@@ -307,13 +290,28 @@ fun OTPPopup(cancel:() -> Unit, confirm: ()-> Unit,resend: ()-> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(350.dp)
-            .padding(top = 40.dp)
             .background(
                 Color.White,
                 shape = RoundedCornerShape( 15.dp)
             )
     ) {
-
+        Row(horizontalArrangement = Arrangement.End,
+            modifier = Modifier
+                .background(
+                    Color.White,
+                    shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
+                )
+                .fillMaxWidth()
+                .height(40.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.x_square),
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(top = 15.dp, end = 15.dp)
+                    .clickable {cancel()}
+            )
+        }
 
         Text(
             text = "Enter OTP sent to number- \n7697345623",
@@ -373,7 +371,7 @@ fun OTPPopup(cancel:() -> Unit, confirm: ()-> Unit,resend: ()-> Unit) {
                 .height(45.dp)
 
 
-            ) {
+        ) {
             Text(
                 text = "Resend OTP",
                 fontSize = 18.sp,
@@ -393,12 +391,12 @@ fun OTPPopup(cancel:() -> Unit, confirm: ()-> Unit,resend: ()-> Unit) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .width(185.dp)
+                .width(215.dp)
                 .height(20.dp)
 
         ) {
             Text(
-                text = "By contunuing, you are agreeing to our",
+                text = "By continuing, you are agreeing to our",
                 fontWeight = FontWeight.Normal,
                 fontSize = 11.sp,
                 textAlign = TextAlign.Center,
