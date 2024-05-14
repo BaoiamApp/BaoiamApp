@@ -23,7 +23,7 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
             MyCourse()
         }
         composable(Screens.CareerScreen.route) {
-           AllInternshipListScreen()
+           CareerScreen(navHostController)
         }
         composable(Screens.ProfileScreen.route) {
             ProfileScreen(navHostController)
