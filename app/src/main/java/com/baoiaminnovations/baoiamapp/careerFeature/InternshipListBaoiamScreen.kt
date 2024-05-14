@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -32,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,8 +54,28 @@ fun InternshipListBaoiamScreen() {
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(text = text, active = active)
-
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterStart)
+            ) {
+                SearchBar(text = text, active = active)
+            }
+            ImageClickable(
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(65.dp)
+                    .padding(15.dp)
+                    .align(Alignment.BottomEnd),
+                onClick = { },
+                painter = painterResource(id = R.drawable.filter_icon),
+                contentDescription = stringResource(id = R.string.offer)
+            )
+        }
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -96,4 +120,10 @@ fun InternshipListBaoiamScreen() {
                 }
             })
     }
+}
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun InternshipListBaoiamScreenPreview() {
+    val navController = rememberNavController()
+    InternshipListBaoiamScreen()
 }

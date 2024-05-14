@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -35,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.careerFeature.ui.theme.BaoiamAppTheme
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
@@ -45,6 +49,30 @@ fun AllInternshipListScreen() {
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterStart)
+            ) {
+                SearchBar(text = text, active = active)
+            }
+            ImageClickable(
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(65.dp)
+                    .padding(15.dp)
+                    .align(Alignment.BottomEnd),
+                onClick = { },
+                painter = painterResource(id = R.drawable.filter_icon),
+                contentDescription = stringResource(id = R.string.offer)
+            )
+        }
+
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -52,18 +80,11 @@ fun AllInternshipListScreen() {
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             // Set the weight of the SearchBar to occupy most of the space
-            SearchBar(text = text, active = active)
 
             // Add a Spacer to create some space between the SearchBar and the Image
             Spacer(modifier = Modifier.width(8.dp))
 
             // Adjust the modifier of the Image to fit within the Row
-            Image(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(id = R.drawable.filter_icon),
-                contentDescription = stringResource(id = R.string.offer),
-                contentScale = ContentScale.Crop
-            )
         }
 
 
@@ -111,4 +132,10 @@ fun AllInternshipListScreen() {
                 }
             })
     }
+}
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun AllInternshipListScreenPreview() {
+    val navController = rememberNavController()
+    AllInternshipListScreen()
 }

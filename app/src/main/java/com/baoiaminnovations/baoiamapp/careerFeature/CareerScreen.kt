@@ -4,16 +4,20 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -47,28 +51,33 @@ fun CareerScreen(navHostController: NavHostController) {
     val context = LocalContext.current
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row {
+    Column(modifier = Modifier.fillMaxHeight()) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .wrapContentHeight()
+        ) {
             Row(
-                modifier = Modifier.fillMaxWidth(0.8f)
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterStart)
             ) {
                 SearchBar(text = text, active = active)
             }
             ImageClickable(
                 modifier = Modifier
-                    .width(65.dp)
+                    .width(60.dp)
                     .height(65.dp)
-                    .padding(15.dp),
-                onClick = { navHostController.navigate(Screens.ScholarshipScreen.route) },
+                    .padding(15.dp)
+                    .align(Alignment.BottomEnd),
+                onClick = { },
                 painter = painterResource(id = R.drawable.filter_icon),
                 contentDescription = stringResource(id = R.string.offer)
             )
-
         }
 
 
 
-        Row(
+    Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
@@ -158,9 +167,9 @@ fun ImageClickable(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun CareerScreenPreview() {
     val navController = rememberNavController()
-    //CareerScreen(navController = navController)
+    CareerScreen(navHostController = navController)
 }

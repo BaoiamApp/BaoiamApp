@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.baoiaminnovations.baoiamapp.R
 import com.baoiaminnovations.baoiamapp.careerFeature.ui.theme.BaoiamAppTheme
 import com.baoiaminnovations.baoiamapp.exploreFeature.components.SearchBar
@@ -40,7 +45,28 @@ fun PopularSearch() {
     var text = remember { mutableStateOf("") }
     var active = remember { mutableStateOf(false) }
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(text = text, active = active)
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
+                    .align(Alignment.CenterStart)
+            ) {
+                SearchBar(text = text, active = active)
+            }
+            ImageClickable(
+                modifier = Modifier
+                    .width(60.dp)
+                    .height(65.dp)
+                    .padding(15.dp)
+                    .align(Alignment.BottomEnd),
+                onClick = { },
+                painter = painterResource(id = R.drawable.filter_icon),
+                contentDescription = stringResource(id = R.string.offer)
+            )
+        }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -101,3 +127,10 @@ fun PopularSearchItem(text: String) {
         )
     }
 }
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun PopularSearchPreview() {
+    val navController = rememberNavController()
+    PopularSearch()
+}
+
