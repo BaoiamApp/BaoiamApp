@@ -83,4 +83,5 @@
     <string name="enterOTP">Enter OTP</string>
     <string name="updatingProfile">Updating Profile</string>
     <string name="updatingProfilePicture">Updating profile picture</string>
+    <string name="recommendedForYou">Recommended for you</string>
 </resources>
