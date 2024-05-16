@@ -6,8 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.baoiaminnovations.baoiamapp.careerFeature.AllInternshipListScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.CareerScreen
+import com.baoiaminnovations.baoiamapp.careerFeature.FilterContentScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.InternshipListBaoiamScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.PopularSearch
+import com.baoiaminnovations.baoiamapp.careerFeature.ReportScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.ScholarshipScreen
 import com.baoiaminnovations.baoiamapp.exploreFeature.screens.ExploreScreen
 import com.baoiaminnovations.baoiamapp.myCourseFeature.MyCourse
@@ -23,7 +25,7 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
             MyCourse()
         }
         composable(Screens.CareerScreen.route) {
-           CareerScreen(navHostController)
+           ReportScreen()
         }
         composable(Screens.ProfileScreen.route) {
             ProfileScreen(navHostController)

@@ -59,4 +59,6 @@
     <string name="title_activity_popular_search">PopularSearch</string>
     <string name="title_activity_internship_list_baoiam_screen">InternshipListBaoiamScreen</string>
     <string name="title_activity_all_internship_list_screen">AllInternshipListScreen</string>
+    <string name="title_activity_filter_content_screen">FilterContentScreen</string>
+    <string name="title_activity_report_screen">ReportScreen</string>
 </resources>
