@@ -8,6 +8,7 @@ import com.baoiaminnovations.baoiamapp.careerFeature.AllInternshipListScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.CareerScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.FilterContentScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.InternshipListBaoiamScreen
+import com.baoiaminnovations.baoiamapp.careerFeature.InternshipScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.PopularSearch
 import com.baoiaminnovations.baoiamapp.careerFeature.ReportScreen
 import com.baoiaminnovations.baoiamapp.careerFeature.ScholarshipScreen
@@ -25,7 +26,7 @@ fun NavGraphBuilder.mainScreenGraph(navHostController: NavHostController) {
             MyCourse()
         }
         composable(Screens.CareerScreen.route) {
-           ReportScreen()
+           InternshipScreen()
         }
         composable(Screens.ProfileScreen.route) {
             ProfileScreen(navHostController)
